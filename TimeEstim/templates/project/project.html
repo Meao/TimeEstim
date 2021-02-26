@@ -1,0 +1,268 @@
+{% extends 'core/base.html' %}
+
+{% load dashboardextras %}
+
+{% block title %}{{ project.title }} | {% endblock %}
+
+{% block content %}
+    <br>
+    <div id="project-app">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+            {# <li><a href="#">Dashboard</a></li>  #}
+                <li><a href="{% url 'projects' %}">Проекты</a></li>
+                <li class="is-active"><a href="{% url 'project' project.id %}" aria-current="page">{{ project.title }}</a></li>
+            </ul>
+        </nav>
+
+        <div class="columns">
+            <div class="column">
+                <h1 class="title">Проект: {{ project.title }}</h1>
+                <p>В работе: {{ project.registered_time|format_minutes }}</p>
+                <p >Задачи: 
+                    {{ project.num_tasks_todo }} не начато, 
+                    {{ project.num_tasks_ongoing }} в процессе,
+                    {{ project.num_tasks_testing }} тестируется</p>
+                <p>Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                <p>Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
+                <p>Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p>
+                <div class="buttons">
+                    <a @click="showAddTaskModal = !showAddTaskModal" class="button is-light">
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                        <span>Добавить задачу</span>
+                    </a> 
+
+                    {% comment %} {% if team.plan.max_tasks_per_project > project.tasks.count %}
+                        <a @click="showAddTaskModal = !showAddTaskModal" class="button is-light">Добавить задачу</a>
+                    {% else %}
+                        <div class="notification is-warning">
+                            Эта команда достигла лимита проектов.<br>
+                
+                            {% if team.created_by == request.user %}
+                                <a href="{% url 'team:plans' %}">Улучшить абонемент</a>
+                            {% else %}
+                                Свяжитесь с капитаном вашей команды.
+                            {% endif %}
+                        </div>
+                    {% endif %} {% endcomment %}
+
+                    <a href="{% url 'edit_project' project.id %}" class="button is-light">
+                        <span class="icon"><i class="far fa-edit"></i></span>
+                        <span>Редактировать проект</span>
+                    </a> 
+                </div> 
+            </div>
+        </div>
+
+        {% if not tasks_todo and not tasks_done and not tasks_ongoing and not tasks_testing and not tasks_archived %}
+            <div class="columns">
+                <div class="column is-3">
+                    <div class="notification">
+                        <p>Задач пока нет </p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <h2 class="is-size-4">Канбан таблица</h2>
+        <div class="columns is-multiline">
+            {% if tasks_todo %}
+            <div class="column">
+                <h3 class="is-size-5">Сделать</h2>
+                <div class="columns is-multiline">
+                    {% for task in tasks_todo %}
+                    <div class="column">
+                        <div class="notification">
+                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
+                            {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
+                            {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
+                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
+                            {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
+                            {% comment %} <br> {% endcomment %}
+                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button">
+                                <span class="icon"><i class="fas fa-trash"></i></span>
+                                <span>Удалить</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if tasks_ongoing %}
+            <div class="column">
+                <h3 class="is-size-5">В процессе</h2>
+                <div class="columns is-multiline">
+                    {% for task in tasks_ongoing %}
+                    <div class="column">
+                        <div class="notification">
+                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
+                            {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
+                            {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
+                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
+                            {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
+                            {% comment %} <br> {% endcomment %}
+                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button">
+                                <span class="icon"><i class="fas fa-trash"></i></span>
+                                <span>Удалить</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if tasks_testing %}
+            <div class="column">
+                <h3 class="is-size-5">Тестируется</h2>
+                <div class="columns is-multiline">
+                    {% for task in tasks_testing %}
+                    <div class="column">
+                        <div class="notification">
+                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
+                            {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
+                            {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
+                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
+                            {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
+                            {% comment %} <br> {% endcomment %}
+                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button">
+                                <span class="icon"><i class="fas fa-trash"></i></span>
+                                <span>Удалить</span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% if tasks_done %}
+            <div class="column">
+                <h3 class="is-size-5">Выполнено</h2>
+                <div class="columns is-multiline">
+                    {% for task in tasks_done %}
+                    <div class="column">
+                        <div class="notification">
+                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
+                            {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
+                            {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
+                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
+                            {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
+                            {% comment %} <br> {% endcomment %}
+                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+            
+        <div class="columns is-multiline">
+            {% if tasks_archived %}
+            <div class="column">
+                <h3 class="is-size-5">В архиве</h2>
+                <div class="columns is-multiline">
+                    {% for task in tasks_archived %}
+                    <div class="column">
+                        <div class="notification">
+                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
+                            {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
+                            {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
+                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
+                            {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
+                            {% comment %} <br> {% endcomment %}
+                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="modal" :class="{'is-active': showAddTaskModal }">
+            <div class="modal-background"></div>
+
+            <form method="post" action="." @submit="validateForm">
+                {% csrf_token %}
+                <div class="modal-card">
+                    <div class="modal-card-head">
+                        <p class="modal-card-title">Добавить задачу</p>
+                    </div>
+                    <div class="modal-card-body">
+                        {% for field in form %}
+                            <div class="field is-horizontal">
+                                {{ field.errors }}
+                                <div class="field-label">  
+                                {{ field.label_tag }} 
+                                </div>
+                                <div class="field-body"><div class="field"><div class="control"> 
+                                {{ field }}
+                                </div></div></div> 
+                                {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            </div>
+
+
+                            {% comment %} <div class="field">
+                                {{ field.errors }}
+                                <b> 
+                                {{ field.label_tag }} 
+                                </b>
+                                <div class="control">
+                                {{ field }}
+                                </div>
+                                {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            </div> {% endcomment %}
+                        {% endfor %}
+                    </div>
+                    <footer class="modal-card-foot">
+                        <button class="button">Создать</button>
+                        <button class="button" @click="showAddTaskModal = !showAddTaskModal">Отмена </button>
+                    </footer>
+                </div>
+            </form>
+        </div> 
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const ProjectApp = {
+            data() {
+                return {
+                    showAddTaskModal: false,
+                    title: '',
+                    showError: false
+                }
+            },
+            delimiters: ['[[', ']]'],
+            methods: {
+                validateForm(e) {
+                    if (this.title) {
+                        return true
+                    }
+                    this.showError = true
+                    return false
+                }
+            }
+        }
+        Vue.createApp(ProjectApp).mount('#project-app')
+    </script>
+{% endblock %} 

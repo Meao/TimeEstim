@@ -1,0 +1,153 @@
+{% extends 'core/base.html' %}
+
+{% load dashboardextras %}
+
+{% block title %}Панель управления | {% endblock %}
+
+{% block content %}
+    <div class="columns is-multiline">
+        <div class="column is-6">
+            <div class="notification">
+                <h2 class="subtitle">За {% if num_days is 0 %}сегодня {{ date_user|date:"d.m.Y" }}{% else %}{{ date_user|date:"d.m.Y" }}{% endif %}</h2>
+            
+                {% if date_steps %}
+                    <table class="table is-fullwidth" style="text-align: left;">
+                        <thead>
+                            <tr>
+                                <th>Задача</th>
+                                <th>Проект</th>
+                                <th>Время</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for step in date_steps %}
+                            <tr>
+                                <td>{{ step.task.title }}</td>
+                                <td>{{ step.project.title }}</td>
+                                <td>{{ step.minutes|format_minutes }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">Всего</td>
+                                <td>{{ time_for_user_and_date|format_minutes }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                {% else %}
+                    <p class="block">Сегодня нет записей</p>
+                {% endif %}
+
+                <a href="?num_days={{ num_days|add:'1' }}" class="mt-4">Предыдущий день</a>
+                {% if num_days > 0 %}
+                <a href="?num_days={{ num_days|add:'-1' }}" class="mt-4">Следующий день</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="column is-6">
+            <div class="notification">
+                <h2 class="subtitle">За {% if user_num_months is 0 %}текущий месяц{% else %}месяц {{ user_month|date:"m.Y" }}{% endif %}</h2>
+                {% if time_user_month %}
+                    <table class="table is-fullwidth" style="text-align: left;">
+                        <thead>
+                            <tr>
+                                <th>Проект</th>
+                                <th>Время</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for project in all_projects %}
+                                {% if project.time_user_project_month > 0 %}
+                                <tr>
+                                    <td>{{ project.title }}</td>
+                                    <td>{{ project.time_user_project_month|format_minutes }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Всего</td>
+                                <td>{{ time_user_month|format_minutes }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                {% else %}
+                    <p class="block">В этом месяце нет записей</p>
+                {% endif %}
+                <a href="?user_num_months={{ user_num_months|add:'1' }}" class="mt-4">Предыдущий</a>
+                {% if user_num_months > 0 %}
+                <a href="?user_num_months={{ user_num_months|add:'-1' }}" class="mt-4">Следующий</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="column is-6">
+            <div class="notification">
+                <h2 class="subtitle">Записи таймера</h2>
+                <table class="table is-fullwidth" style="text-align: left;">
+                    <thead>
+                        <tr>
+                            <th>Начало</th>
+                            <th>Время</th>
+                            <th>Статус</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for step in untracked_steps %}
+                            <tr>
+                                <td>{{ step.created_at|date:"d.m.Y" }} {{ step.created_at|time:"H:i" }}</td>
+                                <td>
+                                    {% if step.minutes == 0 %}
+                                        {{ step.minutes_since|format_minutes }}
+                                    {% else %}
+                                        {{ step.minutes|format_minutes }}
+                                    {% endif %}
+                                </td>
+                                <td>{% if step.minutes == 0 %}В процессе{% else %}Без задачи{% endif %}</td>
+                                    <td>
+                                        <a href="{% url 'track_step' step.id %}" class="button">
+                                            <span class="icon"><i class="fas fa-plus"></i></span>
+                                            <span>Добавить в задачу</span>
+                                        </a>
+                                        <a href="{% url 'delete_untracked_step' step.id %}" class="button">
+                                            <span class="icon"><i class="fas fa-trash"></i></span>
+                                            <span>Удалить</span>
+                                        </a>
+                                </td>
+                                {% comment %} <td><a href="{% url 'track_step' step.id %}">Добавить в задачу</a></td>
+                                <td><a href="{% url 'delete_untracked_step' step.id %}">Удалить</a></td> {% endcomment %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns is-multiline">
+        <div class="column is-12">
+            <h2 class="subtitle">Новейшие проекты</h2>
+        </div>
+        {% for project in projects %}
+            <div class="column is-3">
+                <div class="notification">
+                    <h2 class="is-size-5">{{ project.title }}</h2>
+                    <p class="is-size-7">Потрачено времени: {{ project.registered_time|format_minutes }}</p>
+                    <p class="is-size-7">Задач: {{ project.num_tasks_todo }}</p>
+                    {% comment %} <hr> {% endcomment %}
+                    <a href="{% url 'project' project.id %}" class="button ">Подробнее</a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="column is-3">
+                <div class="notification">
+                    <p>Пока нет проектов</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

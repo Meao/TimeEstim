@@ -1,0 +1,131 @@
+{% extends 'core/base.html' %}
+
+{% load static %}  
+{% comment %}{#  Добро пожаловать в 
+Учет времени стало проще. 
+Давайте начнем #}
+{% endcomment %}
+{% block title %}Домашняя страница | {% endblock %}
+
+{% block content %}
+<section class="hero is-medium is-light is-bold">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-8 is-offset-2">
+                <div class="columns is-align-items mt-6">
+                    <div class="column is-8 text">
+                        <h1 class="title">Учет времени</h1>
+                        <h2 class="subtitle">Потому что время - деньги</h2>
+                        <p>Простой учет времени и подсказки искуственного интеллекта.</p>
+                        <p></p>
+                        <br>
+                    </div>
+                    <div class="column is-4 image">
+                        <img src="{% static 'images/time-money.png' %}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  
+<div class="container">
+    <div class="columns">
+        <div class="column is-8 is-offset-2">
+            <div class="columns is-align-items mt-6">
+                <div class="column is-4 image">
+                    <img src="{% static 'images/features-tracktime.png' %}"> 
+                </div>
+                <div class="column is-8 text">
+                    <h2 class="subtitle">4 простых шага</h2>
+                    <ul>
+                        <li>Записаться.</li>
+                        <li>Запустить таймер.</li>
+                        <li>Создать проект и задачу.</li>
+                        <li>Наслаждаться графиком своих побед.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns mt-6">
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-3 has-text-centered">
+                                <span class = "has-text-light">
+                                    <i class="fas fa-list-ol fa-5x"></i>
+                                </span>
+                            </p><br>
+                            <p class="subtitle is-6">Agile: предварительно оцените задачу в 1, 2, 5 или 8 часов.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-3 has-text-centered">
+                                <span class = "has-text-light">
+                                    <i class="fas fa-sort-numeric-up-alt fa-5x"></i>
+                                </span>
+                            </p><br>
+                            <p class="subtitle is-6">Искусственный интеллект: подсказка оценки задач.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-3 has-text-centered">
+                                <span class = "has-text-light">
+                                    <i class="fas fa-calendar-alt fa-5x"></i>
+                                </span>
+                            </p><br>
+                            <p class="subtitle is-6">Наглядная визуализация за день и месяц.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-3 has-text-centered">
+                                <span class = "has-text-light">
+                                    <i class="fas fa-border-all fa-5x"></i>
+                                </span>
+                            </p><br>
+                            <p class="subtitle is-6">Матрица Эйзенхауэра: видно важное и срочное.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns is-align-items-center mt-6">
+        <div class="column is-4 is-offset-4 has-text-centered">
+            <h2 class="subtitle"> Создать аккаунт прямо сейчас</h2>
+            <a href="#" class="button is-light is-large">Бесплатная регистрация</a> 
+        </div>
+    </div>
+</div> 
+
+<div class="is-medium">
+<br><br><br>
+<p>Credits for the original CC BY images creation: https://www.flickr.com/photos/86530412@N02/7932571974 https://www.flickr.com/photos/28541331@N00/5658951519  </p>
+</div>
+{% endblock %}

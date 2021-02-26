@@ -1,0 +1,238 @@
+{% extends 'core/base.html' %}
+
+{% load dashboardextras %}
+
+{% block title %}Проекты | {% endblock %}
+
+{% block content %}
+    <div id="projects-app">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+            {# <li><a href="#">Dashboard</a></li> #}
+                {% comment %} <li class="is-active"><a href="#" aria-current="page">Проекты</a></li> {% endcomment %}
+            </ul>
+        </nav>
+
+        <div class="columns">
+            <div class="column is-4">
+                <h1 class="title">Проекты</h1>
+                <a @click="showAddProjectModal = !showAddProjectModal" class="button is-light">
+                    <span class="icon"><i class="fas fa-plus"></i></span>
+                    <span>Добавить проект</span>
+                </a> 
+                {% comment %} {% if team.plan.max_projects_per_team > team.projects.count %}
+                    <a @click="showAddProjectModal = !showAddProjectModal" class="button is-light">Добавить проект</a>
+                {% else %}
+                    <div class="notification is-warning">
+                        Эта команда достигла лимита проектов.<br>
+                        {% if team.created_by == request.user %}
+                            <a href="{% url 'team:plans' %}">Улучшить абонемент</a>
+                        {% else %}
+                            Свяжитесь с капитаном вашей команды.
+                        {% endif %}
+                    </div>
+                {% endif %}  {% endcomment %}
+            </div>
+        </div>
+
+        <h2 class="is-size-4">Матрица Эйзенхауэра</h2>
+        <div class="columns is-multiline">
+                <div class="column is-half">
+                    <h3 class="is-size-5">Важно Срочно</h3>
+                    <div class="columns is-multiline is-gapless">
+                        {% for project in projects %}
+                        {% if project.importance == True %}{% if project.urgency == True %}
+                            <div class="column">
+                                <div class="notification">
+                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
+                                    <p class="is-size-7">Задачи: 
+                                        {{ project.num_tasks_todo }} не начато, 
+                                        {{ project.num_tasks_ongoing }} в процессе,
+                                        {{ project.num_tasks_testing }} тестируется</p>
+                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
+                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
+                                    <br>
+                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a> 
+                                    <a href="{% url 'delete_project' project.id %}" class="button">
+                                        <span class="icon"><i class="fas fa-trash"></i></span>
+                                        <span>Удалить</span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}{% endif %}
+                        {% empty %}
+                            <div class="column is-3">
+                                <div class="notification">
+                                    Пока нет проектов...
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <h3 class="is-size-5">Не важно Срочно</h3>
+                    <div class="columns is-multiline">
+                        {% for project in projects %}
+                        {% if project.importance == False %}{% if project.urgency == True %}
+                            <div class="column">
+                                <div class="notification">
+                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
+                                    <p class="is-size-7">Задачи: 
+                                        {{ project.num_tasks_todo }} не начато, 
+                                        {{ project.num_tasks_ongoing }} в процессе,
+                                        {{ project.num_tasks_testing }} тестируется</p>
+                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
+                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
+                                    <br>
+                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button">
+                                        <span class="icon"><i class="fas fa-trash"></i></span>
+                                        <span>Удалить</span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}{% endif %}
+                        {% empty %}
+                            <div class="column is-3">
+                                <div class="notification">
+                                    Пока нет проектов...
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+        </div>
+        <div class="columns is-multiline">
+                <div class="column is-half">
+                    <h3 class="is-size-5">Важно Не срочно</h3>
+                    <div class="columns is-multiline">
+                        {% for project in projects %}
+                        {% if project.importance == True %}{% if project.urgency == False %}
+                            <div class="column">
+                                <div class="notification">
+                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
+                                    <p class="is-size-7">Задачи: 
+                                        {{ project.num_tasks_todo }} не начато, 
+                                        {{ project.num_tasks_ongoing }} в процессе,
+                                        {{ project.num_tasks_testing }} тестируется</p>
+                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
+                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
+                                    <br>
+                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a> 
+                                    <a href="{% url 'delete_project' project.id %}" class="button">
+                                        <span class="icon"><i class="fas fa-trash"></i></span>
+                                        <span>Удалить</span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}{% endif %}
+                        {% empty %}
+                            <div class="column is-3">
+                                <div class="notification">
+                                    Пока нет проектов...
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <h3 class="is-size-5">Не важно Не срочно</h3>
+                    <div class="columns is-multiline">
+                        {% for project in projects %}
+                        {% if project.importance == False %}{% if project.urgency == False %}
+                            <div class="column">
+                                <div class="notification">
+                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
+                                    <p class="is-size-7">Задачи: 
+                                        {{ project.num_tasks_todo }} не начато, 
+                                        {{ project.num_tasks_ongoing }} в процессе,
+                                        {{ project.num_tasks_testing }} тестируется</p>
+                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
+                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
+                                    <br>
+                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a> 
+                                    <a href="{% url 'delete_project' project.id %}" class="button">
+                                        <span class="icon"><i class="fas fa-trash"></i></span>
+                                        <span>Удалить</span>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}{% endif %}
+                        {% empty %}
+                            <div class="column is-3">
+                                <div class="notification">
+                                    Пока нет проектов...
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+        </div>
+
+        <div class="modal" :class="{'is-active': showAddProjectModal}">
+            <div class="modal-background"></div>
+
+            <form method="post" action="." @submit="validateForm">
+                {% csrf_token %}
+                <div class="modal-card">
+                    <div class="modal-card-head">
+                        <p class="modal-card-title">Добавить проект</p>
+                    </div>
+                    <div class="modal-card-body">
+                        {% for field in form %}
+                            <div class="field is-horizontal">
+                                {{ field.errors }}
+                                <div class="field-label">  
+                                {{ field.label_tag }} 
+                                </div>
+                                <div class="field-body"><div class="field"><div class="control"> 
+                                {{ field }}
+                                </div></div></div> 
+                                {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <footer class="modal-card-foot">
+                        <button class="button">Создать</button>
+                        <button class="button" @click="showAddProjectModal = !showAddProjectModal">Отмена </button>
+                    </footer>
+                </div>
+            </form>
+        </div> 
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const ProjectsApp = {
+            data() {
+                return {
+                    showAddProjectModal: false,
+                    title: '',
+                    showError: false
+                }
+            },
+            delimiters: ['[[', ']]'],
+            methods: {
+                validateForm(e) {
+                    if (this.title) {
+                        return true
+                    }
+                    this.showError = true
+                    return false
+                }
+            }
+        }
+        Vue.createApp(ProjectsApp).mount('#projects-app')
+    </script>
+{% endblock %}

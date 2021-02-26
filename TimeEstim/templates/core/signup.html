@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Зарегистрироваться | {% endblock %}
+
+{% block content %}
+    <section class="hero is-medium is-light is-bold">
+            <div class="container">
+                <br>
+                <h1 class="title">Зарегистрироваться</h1>
+                <h2 class="subtitle">Создайте учетную запись и начните планировать время прямо сейчас  </h2>
+            </div>
+    </section>
+
+    <div class="columns" id="signup-app">
+        <div class="column is-6 is-offset-3">
+            <form method="post" action="." class="mt-6" v-on:submit="validateForm" novalidate>
+                {% csrf_token %}
+                {% if form.errors %} 
+                    <div class="notification is-danger">
+                        {{ form.non_field_errors}}
+                        {% for field in form %}
+                            {% if field.errors %}
+                                {{ field.label }}: {{ field.errors|striptags }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="notification is-danger" v-if="errors.length">
+                    <p v-for="error in errors">
+                        [[ error ]]
+                    </p>
+                </div>
+                <div class="field">
+                    <label>Эл. почта</label>
+                    <div class="control">
+                        <input type="email" name="username" id="id_username" class="input" v-model="username">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Пароль</label>
+                    <div class="control">
+                        <input type="password" name="password1" id="id_password1" class="input" v-model="password1">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Повторите пароль</label>
+                    <div class="control">
+                        <input type="password" name="password2" id="id_password2" class="input" v-model="password2">
+                    </div>
+                </div>
+                <ul class="password-helt-text">
+                    <li v-if="password1.length < 8">Ваш пароль должен содержать не менее 8 символов.</li>
+                    <li v-if="!isNaN(password1)">Ваш пароль должен содержать не менее 1 буквы.</li>
+                </ul>
+                <p>Нажатие на кнопку Зарегистрироваться даёт согласие на обработку персональных данных в рамках текущего законодательства.</p>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-light">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            <h2 class="subtitle">Уже есть аккаунт?</h2>
+            <a href="{% url 'login' %}" class="button is-light">Вход</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        const SignupApp = {
+            data() {
+                return {
+                    username: '',
+                    password1: '',
+                    password2: '',
+                    errors: []
+                }
+            },
+            delimiters: ['[[', ']]'],
+            methods: {
+                validateForm(e) {
+                    this.errors = []
+                    if (!this.validateEmail(this.username)) {
+                        this.errors.push('Пожалуйста, проверьте введенную электронную почту')
+                    }
+                    if (this.password1 < 8) {
+                        this.errors.push('Ваш пароль должен содержать не менее 8 символов.')
+                    }
+                    if (this.password1 !== this.password2) {
+                        this.errors.push('Ваши пароли не совпадают')
+                    }
+                    /* */ if (this.password1 === '') {
+                        this.errors.push('Пожалуйста, введите свой пароль')
+                    }
+                    if (!isNaN(this.password1)) {
+                        this.errors.push("Ваш пароль должен содержать не менее 1 буквы.")
+                    }
+                    if (this.errors.length) {
+                        e.preventDefault()
+                        return false
+                    } else { return true }
+                },
+                validateEmail(email) {
+                    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+                        return true
+                    }
+                    return false
+                }
+            }
+        }
+        Vue.createApp(SignupApp).mount('#signup-app')
+    </script>
+{% endblock %}

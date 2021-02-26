@@ -1,0 +1,130 @@
+{% extends 'core/base.html' %}
+
+{% load dashboardextras %}
+
+{% block title %}Добавить в задачу | {% endblock %}
+
+{% block content %}
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+        {# <li><a href="#">Dashboard</a></li>  #}
+            <li><a href="{% url 'projects' %}">Проекты</a></li>
+            <li class="is-active"><a href="{% url 'track_step' step.id %}" aria-current="page">Добавить в задачу</a></li>
+        </ul>
+    </nav>
+
+    <div class="columns" id="track-step-app">
+        <div class="column">
+            <h1 class="title">Добавить в задачу</h1>
+
+            <form method="post" action=".">
+                {% csrf_token %}
+
+                <div class="field">      
+                    <label>Проект</label>
+
+                    <div class="control">
+                        <div class="select">
+                            <select name="project" v-model="project" v-on:change="getTasks()">
+                                <option value="">Выбрать проект</option>
+                                {% for project in projects %}
+                                    <option value="{{ project.id }}">{{ project.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">      
+                    <label>Задача</label>
+
+                    <div class="control">
+                        <div class="select">
+                            <select name="task" v-model="task">
+                                <option v-for="task in tasks" v-bind:key="task.id" :value="task.id">[[ task.title ]]</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <label>Ввести время</label>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <div class="select">
+                            <select name="hours">
+                                <option value="0"{% if hours == 0 %} selected {% endif %}>0ч</option>
+                                {% for i in h %}
+                                    <option value="{{ i }}" {% if hours == i %} selected {% endif %}>{{ i }}ч</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control">
+                        <div class="select">
+                            <select name="minutes">
+                                <option value="0"{% if minutes == 0 %} selected {% endif %}>0м</option>
+                                {% for i in m %}
+                                    <option value="{{ i }}" {% if minutes == i %} selected {% endif %}>{{ i }}м</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Дата</label>
+                    <div class="control">
+                        <input type="date" id="id_date" name="date" class="input" value="{{ step.created_at|date:'Y-m-d' }}" placeholder="yyyy-mm-dd">
+                    </div>
+                </div>
+                    
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-light">Сохранить изменения</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const TrackStepApp = {
+        data() {
+            return {
+                tasks: [
+                    {'id': '', 
+                    'title': 'Сначала выберите проект'}
+                ],
+                project: '',
+                task: ''
+            }
+        },
+        delimiters: ['[[', ']]'],
+        methods: {
+            getTasks() {
+                if (this.project !== '') {
+                    fetch('/dashbd/projects/api/get_tasks/?project_id=' + this.project, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((result) => {
+                        this.tasks = result.tasks
+                        this.tasks.unshift({'id': '', 'title': 'Выбрать задачу'})
+                    })
+                } else {
+                    this.tasks = [{'id': '', 'title': 'Сначала выберите проект'}]
+                    this.task = ''
+                }
+            },
+        }
+    }
+    Vue.createApp(TrackStepApp).mount('#track-step-app')
+</script>
+{% endblock %}

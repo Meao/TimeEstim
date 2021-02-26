@@ -1,0 +1,124 @@
+{% extends 'core/base.html' %}
+
+{% load dashboardextras %}
+
+{% block title %}{{ task.title }} | {% endblock %}
+
+{% block content %}
+<br>
+    <div id="project-app">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="{% url 'projects' %}">Проекты</a></li>
+                <li><a href="{% url 'project' project.id %}">{{ project.title }}</a></li>
+                <li class="is-active"><a href="{% url 'task' project.id task.id %}" aria-current="page">{{ task.title }}</a></li>
+            </ul>
+        </nav>
+
+        <div class="columns">
+            <div class="column is-3">
+                <h1 class="title">Задача: {{ task.title }}</h1>
+                <p>В работе: {{ task.registered_time|format_minutes }}</p>
+                {% if task.aim %}<p>Цель: {{ task.aim }}</p>{% endif %}
+                {% if task.due_date %}<p>Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
+                <p>Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                {% if task.responsible_role %}<p>Ответственные: {{ task.responsible_role }}</p>{% endif %}
+                {% if task.resources %}<p>Ресурсы: {{ task.resources }}</p>{% endif %}
+                <p>Статус: 
+                    {% if task.status == 'todo' %} Сделать
+                    {% elif task.status == 'ongoing' %} В процессе
+                    {% elif task.status == 'testing' %} Тестируется
+                    {% elif task.status == 'done' %} Сделано
+                    {% else %} В архиве
+                    {% endif %}
+                </p>
+                <a href="{% url 'edit_task' project.id task.id %}" class="button is-light">
+                    <span class="icon"><i class="far fa-edit"></i></span>
+                    <span>Редактировать задачу</span>
+                </a>
+                
+                <h2 class="subtitle mt-6">Ввести время</h2>
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <div class="select">
+                                <select name="hours">
+                                    <option value="0">0ч</option>
+                                    {% for i in h %}
+                                        <option value="{{ i }}">{{ i }}ч</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="select">
+                                <select name="minutes">
+                                    <option value="0">0м</option>
+                                    {% for i in m %}
+                                        <option value="{{ i }}">{{ i }}м</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Дата</label>
+                        <div class="control">
+                            <input type="date" id="id_date" name="date" class="input" value="{{ today|date:'Y-m-d' }}" placeholder="yyyy-mm-dd">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-light">Ввести</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-12">
+                <hr>
+                <h2 class="subtitle">История записей</h2>
+                {% if task.steps.all %}
+                    <table class="table is-fullwidth" style="text-align: left;">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Время</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for step in task.steps.all %}
+                                <tr>
+                                    <td>{{ step.created_at|date:"d.m.Y" }}</td>
+                                    <td>{{ step.minutes|format_minutes }}</td>
+                                    <td>
+                                        <a href="{% url 'edit_step' project.id task.id step.id %}" class="button">
+                                            <span class="icon"><i class="far fa-edit"></i></span>
+                                            <span>Редактировать</span>
+                                        </a>
+                                        <a href="{% url 'delete_step' project.id task.id step.id %}" class="button">
+                                            <span class="icon"><i class="fas fa-trash"></i></span>
+                                            <span>Удалить</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="2">Всего</th>
+                                <th colspan="2">{{ task.registered_time|format_minutes }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                {% else %}
+                    <p>Нет записей </p>
+                {% endif %}
+            </div> 
+        </div>
+    </div>
+{% endblock %} 

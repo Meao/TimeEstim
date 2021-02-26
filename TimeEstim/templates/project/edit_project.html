@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Редактировать проект {{ project.title }} | {% endblock %}
+
+{% block content %}
+    <div id="project-app">
+    <br>
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+            {# <li><a href="#">Dashboard</a></li>  #}
+                <li><a href="{% url 'projects' %}">Проекты</a></li>
+                <li><a href="{% url 'project' project.id %}">{{ project.title }}</a></li>
+                <li class="is-active"><a href="{% url 'edit_project' project.id %}" aria-current="page">Редактировать проект</a></li>
+            </ul>
+        </nav>
+
+        <div class="columns">
+            <div class="column">
+                <h1 class="title">Редактировать проект</h1>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-4">
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label>Название</label>
+                        <div class="control">
+                            <input type="text" name="title" id="id_title" class="input" value="{{ project.title }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Статус</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="status" id="id_status">
+                                    <option value="public"{% if project.status == 'public' %} selected{% endif %}>Публичный</option>
+                                    <option value="private"{% if project.status == 'private' %} selected{% endif %}>Закрытый</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="field">
+                            <label>Важный</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select name="importance" id="id_importance">
+                                        <option value="False"{% if project.importance == False %} selected{% endif %}>Нет</option>
+                                        <option value="True"{% if project.importance == True %} selected{% endif %}>Да</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Срочный</label>
+                            <div class="control">
+                                <div class="select">
+                                    <select name="urgency" id="id_urgency">
+                                        <option value="False"{% if project.urgency == False %} selected{% endif %}>Нет</option>
+                                        <option value="True"{% if project.urgency == True %} selected{% endif %}>Да</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-light">Сохранить изменения</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

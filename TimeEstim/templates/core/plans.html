@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Абонементы | {% endblock %}
+
+{% block content %}
+    <section class="hero is-medium is-light is-bold">
+            <div class="container">
+                            <br>
+                <h1 class="title">Абонементы</h1>
+                <h2 class="subtitle">Выберите наиболее подходящий для вас тарифный план</h2>
+                            <br>
+            </div>
+    </section>  
+
+    <div class="columns mt-6">
+        <div class="column is-half">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">Бесплатный</p>
+                            <p class="subtitle is-6">0 Р</p>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <ul>
+                            <li>Только публичные проекты</li>
+                            <li>Только открытые задачи</li>
+                        </ul>
+
+                        <hr>
+
+                        <a href="{% url 'signup' %}" class="button is-light">Регистрация</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column is-half">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">Бизнес</p>
+                            <p class="subtitle is-6">? Р</p>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <ul>
+                            <li>Закрытые проекты</li>
+                            <li>Приватные задачи</li>
+                        </ul>
+
+                        <hr>
+
+                        <a href="mailto:marina_kts@yahoo.fr?Subject=TimeEstimation%20request" target="_top" class="button is-light">
+                            <i class="fas fa-envelope"></i> 
+                            &nbsp;Отправьте письмо 
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

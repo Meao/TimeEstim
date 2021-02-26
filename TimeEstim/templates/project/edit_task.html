@@ -1,0 +1,90 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Редактировать задачу {{ project.title }} | {% endblock %}
+
+{% block content %}
+    <div id="project-app">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+            {# <li><a href="#">Dashboard</a></li>  #}
+                <li><a href="{% url 'projects' %}">Проекты</a></li>
+                <li><a href="{% url 'project' project.id %}">{{ project.title }}</a></li>
+                <li class="is-active"><a href="{% url 'edit_task' project.id task.id %}" aria-current="page">Редактировать задачу</a></li>
+            </ul>
+        </nav>
+
+        <div class="columns">
+            <div class="column">
+                <h1 class="title">Редактировать задачу</h1>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-4">
+                <form method="post" action=".">
+                    {% csrf_token %}
+                    <div class="field">
+                        <label>Название</label>
+                        <div class="control">
+                            <input type="text" name="title" id="id_title" class="input" value="{{ task.title }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Цель</label>
+                        <div class="control">
+                            <input type="text" name="aim" id="id_aim" class="input" value="{{ task.aim|default_if_none:"" }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Дедлайн</label>
+                        <div class="control">
+                            <input type="date" id="id_date" name="date" class="input" value="{{ task.due_date|date:'Y-m-d' }}" placeholder="yyyy-mm-dd">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Предполагаемая продолжительность</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="estimated_length" id="id_estimated_length">
+                                    <option value="1"{% if task.estimated_length == 1 %} selected{% endif %}>1</option>
+                                    <option value="2"{% if task.estimated_length == 2 %} selected{% endif %}>2</option>
+                                    <option value="3"{% if task.estimated_length == 3 %} selected{% endif %}>3</option>
+                                    <option value="5"{% if task.estimated_length == 5 %} selected{% endif %}>5</option>
+                                    <option value="8"{% if task.estimated_length == 8 %} selected{% endif %}>8</option>
+                                </select>                                    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Ответственные</label>
+                        <div class="control">
+                            <input type="text" name="responsible_role" id="id_responsible_role" class="input" value="{{ task.responsible_role|default_if_none:"" }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Ресурсы</label>
+                        <div class="control">
+                            <input type="text" name="resources" id="id_resources" class="input" value="{{ task.resources|default_if_none:"" }}">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Статус</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="status" id="id_status">
+                                    <option value="todo"{% if task.status == 'todo' %} selected{% endif %}>Сделать</option>
+                                    <option value="done"{% if task.status == 'done' %} selected{% endif %}>Выполнено</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <button class="button is-light">Сохранить изменения</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

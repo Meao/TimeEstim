@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <!-- Title -->
+        <title>{% block title %}{% endblock %}TimeEstim</title>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.delivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <div id="navbar-app">
+            <nav class="navbar is-light is-fixed-top" role="navigation" aria-label="dropdown navigation">
+                <div class="navbar-brand">
+                    <a href="/" class="navbar-item"><strong>TimeEstim</strong></a>
+      <a class="navbar-burger">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+                </div>
+                <div class="navbar-menu ">
+                    <div class="navbar-start">
+                        {% comment %} {% if not request.user.is_authenticated %} 
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="#" class="navbar-link">
+                                <span class="icon"><i class="fas fa-business-time"></i></span>
+                            </a>
+
+                            <div class="navbar-dropdown">
+                            <a href="{% url 'templates' %}" class="navbar-item">
+                                Шаблоны
+                            </a>
+                            <a href="{% url 'plans' %}" class="navbar-item">
+                                Абонементы
+                            </a>
+                            </div>
+                        </div>
+
+                        {% else %}  {% endcomment %}
+                        {% if request.user.is_authenticated %} 
+                        <div class="navbar-item" v-if="!trackingTime">
+                            <div class="buttons">
+                                <a class="button is-success" @click="startTimer()">
+                                    <span class="icon"><i class="fas fa-play"></i></span>
+                                    <span>Старт</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="navbar-item" v-else>
+                            <div class="buttons">
+                                <a class="button is-warning" @click="stopTimer()">
+                                    <span class="icon"><i class="fas fa-stop"></i></span>
+                                    {% comment %} <i class="fas fa-square"></i> {% endcomment %}
+                                    <span>[[ readableSeconds ]] (стоп)</span>
+                                </a>
+                            </div>
+                        </div> 
+
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="#" class="navbar-link">
+                                <span class="icon"><i class="fas fa-business-time"></i></span>
+                            </a>
+
+                            <div class="navbar-dropdown">
+                            <a href="#" class="navbar-item">
+                                Шаблоны
+                            </a>
+                            <a href="#" class="navbar-item">
+                                Абонементы
+                            </a>
+                            </div>
+                        </div> 
+
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a href="#" class="navbar-link">
+                                <span class="icon"><i class="fas fa-tasks"></i></span>
+                            </a>
+
+                            <div class="navbar-dropdown">
+                            <a href="{% url 'dashbd' %}" class="navbar-item">
+                                Панель управления
+                            </a>
+                            <a href="{% url 'projects' %}" class="navbar-item">
+                                Проекты
+                            </a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="navbar-end">
+                        {% if not request.user.is_authenticated %} 
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <a href="{% url 'login' %}" class="button ">
+                                        <span class="icon"><i class="fas fa-user-clock"></i></span> 
+                                        &nbsp;&nbsp;Вход
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <a href="{% url 'signup' %}" class="button ">
+                                        <span class="icon"><i class="fas fa-user-clock"></i></span> 
+                                        &nbsp;&nbsp;Регистрация 
+                                    </a>
+                                </div>
+                            </div> 
+                        {% else %} 
+                            <div class="navbar-item">
+                                <div class="buttons">
+                                    <a href="{% url 'profile' %}" class="button ">
+                                        <span class="icon"><i class="fas fa-user-clock"></i></span>
+                                        <span>{% firstof request.user.get_full_name request.user.username %}</span>
+                                    </a>
+                                </div>
+                            </div> 
+                        {% endif %} 
+
+                    </div>
+                </div>
+            </nav>
+
+            <div class="modal" :class="{'is-active': showTrackingModal}">
+                <div class="modal-background"></div>
+
+                <div class="modal-card">
+                    <div class="modal-card-head">
+                        <p class="modal-card-title">Отслеживаемое время</p>
+                    </div>
+
+                    <div class="modal-card-body">
+                        <p>Вы отслеживали [[ readableSeconds ]]</p>
+                    </div>
+
+                    <footer class="modal-card-foot">
+                        <button class="button is-primary" @click="addToTask()">Добавить в задачу</button>
+                        <button class="button is-success" @click="addLater()">Добавить позже</button>
+                        <button class="button is-danger" @click="discardTimer()">Отменить</button>
+                    </footer>
+                </div>
+            </div>  
+        </div>
+        <!-- End Navbar -->
+
+        <!-- Main -->
+        <section class="section">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="notification is-info">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </section>
+        <!-- End Main -->
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="columns is-multiline">
+            {% comment %}<!--  https://bulma.io/documentation/columns/responsiveness/  -->{% endcomment %}
+                <div class="column is-4">
+                    <h2 class="subtitle">TimeEstim</h2>
+                </div>
+
+                <div class="column is-offset-6 is-2">
+                    <ul>
+                        <li><a href="{% url 'templates' %}">Шаблоны</a></li>
+                        <li><a href="{% url 'plans' %}">Абонементы</a></li>
+                    </ul>
+                </div>
+
+                <div class="column is-12 has-text-centered">
+                    <p>Copyright (c) 2021 Кривцун М.А. </p>
+                </div>
+            </div>
+        </footer>
+        
+        <!-- This adds font icons -->
+        <script src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script> 
+        <script src="https://unpkg.com/vue@next"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const burger = document.querySelector(".navbar-burger")
+                const menu = document.querySelector(".navbar-menu")
+                burger.addEventListener("click", () => {
+                    burger.classList.toggle("is-active")
+                    menu.classList.toggle("is-active")
+                })
+            })
+        </script>
+        <script>
+            var NavbarApp = {
+                data() {
+                    return {
+                        seconds: {{ active_step_seconds }},
+                        trackingTime: false,
+                        showTrackingModal: false,
+                        timer: null,
+                        entryID: 0,
+                        startTime: '{{ start_time }}'
+                    }
+                },
+                delimiters: ['[[', ']]'],
+                methods: {
+                    startTimer() {
+                        fetch('/api/start_timer/', {
+                            method: 'POST',
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then((response) => {
+                            return response.json()
+                        })
+                        .then((result) => {
+                            this.startTime = new Date()
+                            this.trackingTime = true
+                            this.timer = setInterval(() => {
+                                this.seconds = (new Date() - this.startTime) / 1000
+                            }, 1000)
+                        })
+                    },
+                    stopTimer() {
+                        fetch('/api/stop_timer/', {
+                            method: 'POST',
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then((response) => {
+                            return response.json()
+                        })
+                        .then((result) => {
+                            this.entryID = result.entryID
+                            this.showTrackingModal = true
+                            this.trackingTime = false
+                            window.clearTimeout(this.timer)
+                        })
+                    },
+                    discardTimer() {
+                        fetch('/api/discard_timer/', {
+                            method: 'POST',
+                            credentials: 'include',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then((response) => {
+                            this.seconds = 0
+                            this.showTrackingModal = false
+                        })
+                    },
+                    addLater() {
+                        this.seconds = 0
+                        this.showTrackingModal = false
+                    },
+                    addToTask() {
+                        console.log('addToTask')
+                        window.location.href = '/track_entry/' + this.entryID + '/'
+                    }
+                },
+                mounted() {
+                    if (this.seconds !== 0) {
+                        this.trackingTime = true
+                        this.timer = setInterval(() => {
+                            this.seconds = (new Date() - new Date(this.startTime)) / 1000
+                        }, 1000)
+                    }
+                },
+                computed: {
+                    readableSeconds() {
+                        const d = Number(this.seconds);
+                        const h = Math.floor(d / 3600);
+                        const m = Math.floor(d % 3600 / 60);
+                        const s = Math.floor(d % 3600 % 60);
+                        const hDisplay = h > 0 ? h + (h == 1 ? "h, " : "h, ") : "";
+                        const mDisplay = m > 0 ? m + (m == 1 ? "m, " : "m, ") : "";
+                        const sDisplay = s >= 0 ? s + (s == 1 ? "s" : "s") : "";
+                        return hDisplay + mDisplay + sDisplay; 
+                    }
+                }
+            }
+            Vue.createApp(NavbarApp).mount('#navbar-app') 
+        </script>
+
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>
