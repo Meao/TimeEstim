@@ -15,6 +15,7 @@ with
 ```
 
 You can find below a list of requirements I have in my project locally, but please note that I abandoned some of these during development.
+```
 asgiref==3.3.1
 blis==0.7.4
 catalogue==2.0.1
@@ -77,3 +78,4 @@ typing-extensions==3.7.4.3
 urllib3==1.26.3
 wasabi==0.8.2
 zipp==3.4.1
+```
