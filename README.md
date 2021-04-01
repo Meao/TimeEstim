@@ -1,5 +1,7 @@
 # TimeEstim
-To avoid a recent incompatibility between ChaterBot and spaCy, I went to /myvenv/lib/python3.7/site-packages/chatterbot/tagging.py
+The project features a website with multiple time management tools. It's in Russian.
+
+To avoid a recent incompatibility between ChatterBot and spaCy, I went to /myvenv/lib/python3.7/site-packages/chatterbot/tagging.py
 and replaced
 ```
       self.nlp = spacy.load(self.language.ISO_639_1.lower())
