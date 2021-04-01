@@ -8,6 +8,22 @@
         <title>{% block title %}{% endblock %}TimeEstim</title>
 
         <link rel="stylesheet" type="text/css" href="https://cdn.delivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <style>
+        .list-group-item {
+        padding: 10px;
+        margin-bottom: 4px;
+        border-radius: 2rem;
+        }
+        .list-group-item:nth-child(even) {
+        background-color: #eee;
+        color: #683db8;
+        }
+        .list-group-item:nth-child(odd) {
+        background: #683db8;
+        color: #FFF;
+        text-align: right;
+        }
+        </style>
     </head>
 
     <body>
@@ -24,13 +40,16 @@
                 </div>
                 <div class="navbar-menu ">
                     <div class="navbar-start">
-                        {% comment %} {% if not request.user.is_authenticated %} 
+                        {% comment %} {% if not request.user.is_authenticated %} {% endcomment %}
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a href="#" class="navbar-link">
                                 <span class="icon"><i class="fas fa-business-time"></i></span>
                             </a>
 
                             <div class="navbar-dropdown">
+                            <a href="{% url 'bot' %}" class="navbar-item">
+                                Чатбот
+                            </a>
                             <a href="{% url 'templates' %}" class="navbar-item">
                                 Шаблоны
                             </a>
@@ -40,7 +59,7 @@
                             </div>
                         </div>
 
-                        {% else %}  {% endcomment %}
+                        {% comment %} {% else %}  {% endcomment %}
                         {% if request.user.is_authenticated %} 
                         <div class="navbar-item" v-if="!trackingTime">
                             <div class="buttons">
@@ -61,7 +80,7 @@
                             </div>
                         </div> 
 
-                        <div class="navbar-item has-dropdown is-hoverable">
+                        {% comment %} <div class="navbar-item has-dropdown is-hoverable">
                             <a href="#" class="navbar-link">
                                 <span class="icon"><i class="fas fa-business-time"></i></span>
                             </a>
@@ -74,7 +93,7 @@
                                 Абонементы
                             </a>
                             </div>
-                        </div> 
+                        </div>  {% endcomment %}
 
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a href="#" class="navbar-link">
@@ -170,6 +189,7 @@
 
                 <div class="column is-offset-6 is-2">
                     <ul>
+                        <li><a href="{% url 'bot' %}">Чатбот</a></li>
                         <li><a href="{% url 'templates' %}">Шаблоны</a></li>
                         <li><a href="{% url 'plans' %}">Абонементы</a></li>
                     </ul>
@@ -202,7 +222,7 @@
                         trackingTime: false,
                         showTrackingModal: false,
                         timer: null,
-                        entryID: 0,
+                        stepID: 0,
                         startTime: '{{ start_time }}'
                     }
                 },
@@ -241,11 +261,22 @@
                             return response.json()
                         })
                         .then((result) => {
-                            this.entryID = result.entryID
+                          //  console.log(result)
+                           // console.log(result.stepID)
+                            this.stepID = result.stepID
+                         //   console.log(result.stepID)
                             this.showTrackingModal = true
                             this.trackingTime = false
                             window.clearTimeout(this.timer)
                         })
+                    },
+                    addToTask() {
+                      //  console.log('addToTask', this.stepID, this.showTrackingModal, this.trackingTime, this.seconds)
+                        window.location.href = '/track_step/' + this.stepID + '/'
+                    },
+                    addLater() {
+                        this.seconds = 0
+                        this.showTrackingModal = false
                     },
                     discardTimer() {
                         fetch('/api/discard_timer/', {
@@ -260,14 +291,6 @@
                             this.seconds = 0
                             this.showTrackingModal = false
                         })
-                    },
-                    addLater() {
-                        this.seconds = 0
-                        this.showTrackingModal = false
-                    },
-                    addToTask() {
-                        console.log('addToTask')
-                        window.location.href = '/track_entry/' + this.entryID + '/'
                     }
                 },
                 mounted() {

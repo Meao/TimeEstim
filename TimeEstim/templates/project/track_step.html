@@ -105,7 +105,7 @@
         methods: {
             getTasks() {
                 if (this.project !== '') {
-                    fetch('/dashbd/projects/api/get_tasks/?project_id=' + this.project, {
+                    fetch('/api/get_tasks/?project_id=' + this.project, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json'

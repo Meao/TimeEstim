@@ -38,6 +38,7 @@
         <h2 class="is-size-4">Матрица Эйзенхауэра</h2>
         <div class="columns is-multiline">
                 <div class="column is-half">
+                <div class="box">
                     <h3 class="is-size-5">Важно Срочно</h3>
                     <div class="columns is-multiline is-gapless">
                         {% for project in projects %}
@@ -50,7 +51,7 @@
                                         {{ project.num_tasks_todo }} не начато, 
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
-                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
@@ -71,7 +72,9 @@
                         {% endfor %}
                     </div>
                 </div>
+                </div>
                 <div class="column is-half">
+                <div class="box">
                     <h3 class="is-size-5">Не важно Срочно</h3>
                     <div class="columns is-multiline">
                         {% for project in projects %}
@@ -84,7 +87,7 @@
                                         {{ project.num_tasks_todo }} не начато, 
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
-                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
@@ -105,9 +108,11 @@
                         {% endfor %}
                     </div>
                 </div>
+                </div>
         </div>
         <div class="columns is-multiline">
                 <div class="column is-half">
+                <div class="box">
                     <h3 class="is-size-5">Важно Не срочно</h3>
                     <div class="columns is-multiline">
                         {% for project in projects %}
@@ -120,7 +125,7 @@
                                         {{ project.num_tasks_todo }} не начато, 
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
-                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
@@ -141,7 +146,9 @@
                         {% endfor %}
                     </div>
                 </div>
+                </div>
                 <div class="column is-half">
+                <div class="box">
                     <h3 class="is-size-5">Не важно Не срочно</h3>
                     <div class="columns is-multiline">
                         {% for project in projects %}
@@ -154,7 +161,7 @@
                                         {{ project.num_tasks_todo }} не начато, 
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
-                                    <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                                    {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
@@ -174,6 +181,7 @@
                             </div>
                         {% endfor %}
                     </div>
+                </div>
                 </div>
         </div>
 

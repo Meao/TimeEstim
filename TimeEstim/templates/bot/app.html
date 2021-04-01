@@ -1,0 +1,119 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Дельный бот | {% endblock %}
+{% block content %}
+    <section class="hero is-medium is-light is-bold">
+        <div class="container">
+            <br>
+            <h1 class="title">Дельный бот</h1>
+            <h2 class="subtitle">Помощник в борьбе с прокрастинацией.</h2>
+        </div>
+    </section>
+    <br>
+    <div class="columns" id="signup-app">
+        <div class="column is-6 is-offset-3">
+            <div class="box">
+                <ul class="list-group chat-log js-chat-log"  style="height: 60vh; overflow: hidden scroll">
+                </ul>
+                
+                <br>
+                <div class="field has-addons">
+                <div class="control is-expanded">
+                      <input type="text" class="input js-text" placeholder="Что ты можешь?..."/>
+                </div>
+                <div class="control">
+                    <button class="button is-light js-say">Ввести</button>
+                </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/js.cookie.js' %}"></script>
+    <script>
+      var chatterbotUrl = '{% url "chatterbot" %}';
+      var csrftoken = Cookies.get('csrftoken');
+
+      function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+        }
+      });
+
+      var $chatlog = $('.js-chat-log');
+      var $input = $('.js-text');
+      var $sayButton = $('.js-say');
+      var myArray = [
+        "Какие есть способы борьбы с прокрастинацией?",
+        "Какие есть причины лени?",
+        "Как разгрузить память?",
+        "Как может помочь медитация?",
+        "Как может помочь нормализация?",
+        "Как мешает тревога?",
+        "Зачем прислушиваться к сигналам тела?",
+        "Как правильно сформулировать задачу?",
+        "Как правильно организовать день?",
+        "Как заставить себя работать?",
+        "Как правильно поставить задачу о встрече?",
+        "Как правильно поставить задачу, если нужно узнать информацию?",
+        "Как правильно поставить задачу исполнителю?",
+        "Как оторваться от ерунды?",
+        "Как сформулировать задачи для проекта?"
+      ];
+      var randomItem = "Что ты можешь?";
+
+      function createRow(text) {
+        var $row = $('<li class="list-group-item"></li>');
+
+        $row.text(text);
+        $chatlog.append($row);
+      }
+
+      function submitInput() {
+        var inp = $input.val() || randomItem;
+        var inputData = {
+          'text': inp
+        }
+
+        var $submit = $.ajax({
+          type: 'POST',
+          url: chatterbotUrl,
+          data: inputData,
+        });
+
+        $submit.done(function(statement) {
+            createRow(inputData.text);
+            createRow(statement.text);
+            // Scroll to the bottom of the chat interface
+            $chatlog[0].scrollTop = $chatlog[0].scrollHeight;
+            $input.val('');
+            randomItem = myArray[Math.floor(Math.random()*myArray.length)];
+            $input.attr("placeholder", randomItem);
+        });
+
+      }
+
+      $sayButton.click(function() {
+        submitInput();
+      });
+
+      $input.keydown(function(event) {
+        // Submit the input when the enter button is pressed
+        if (event.keyCode == 13) {
+          submitInput();
+        }
+      });
+    </script>
+
+{% endblock %}

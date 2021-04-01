@@ -169,7 +169,7 @@ def delete_step(request, project_id, task_id, step_id):
 
 @login_required
 def delete_untracked_step(request, step_id):
-    us = get_object_or_404(User, pk=request.user.uprofile)
+    us = get_object_or_404(User, pk=request.user.pk)
     step = get_object_or_404(Step, creator=us, pk=step_id)
     step.delete()
     messages.info(request, 'Время удалено')

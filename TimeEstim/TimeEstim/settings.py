@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+from chatterbot import languages
 import os
 from pathlib import Path
 
@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'apps.project',
     # 'django.forms', 
     # 'bulma_widget' 
-    'apps.dashbd'
+    'apps.dashbd',
+    'chatterbot.ext.django_chatterbot',
+    'apps.bot',
 ]
 
 MIDDLEWARE = [
@@ -114,11 +116,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CHATTERBOT = {
+    'name': 'Motivation Support Bot',
+    'django_app_name': 'django_chatterbot',
+    'language': 'RUS',
+    # 'storage_adapter': {
+    #     'tagger_language': languages.RUS,
+    #     'import_path': 'chatterbot.storage.SQLStorageAdapter',
+    #     'database_uri': "sqlite:///database.sqlite3",
+    # },
+    'logic_adapters': [
+        # "chatterbot.adapters.logic.ClosestMatchAdapter",
+    #     'chatterbot.logic.MathematicalEvaluation',
+    #     'chatterbot.logic.TimeLogicAdapter',
+        'chatterbot.logic.BestMatch'
+    ],
+    'io_adapter': "chatterbot.adapters.io.JsonAdapter"
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'Ru-ru'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Europe/Moscow'

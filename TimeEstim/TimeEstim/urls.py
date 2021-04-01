@@ -13,17 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
-
+# from apps.bot.views import ChatterBotAppView, ChatterBotApiView
+from apps.bot.views import ChatterBotAppView
+from apps.bot.api import ChatterBotView
 from apps.core.views import index, plans, profile, signup, templates
 from apps.dashbd.api import api_start_timer, api_stop_timer, api_discard_timer, api_get_tasks
 from apps.dashbd.views import dashbd
 from apps.project.views import project, projects, edit_project, delete_project, task, edit_task, delete_task, edit_step, delete_step, track_step, delete_untracked_step
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', index, name='index'),
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
@@ -48,4 +51,8 @@ urlpatterns = [
     path('track_step/<int:step_id>/', track_step, name='track_step'),
     path('projects/', projects, name='projects'),
     path('dashbd/', dashbd, name='dashbd'),
+    url(r'^postbot/', ChatterBotView.as_view(), name='chatterbot'),
+    url(r'^bot/', ChatterBotAppView.as_view(), name='bot'),
+    # url(r'^admin/', admin.site.urls, name='admin'),
+    # url(r'^api/chatterbot/', ChatterBotApiView.as_view(), name='chatterbot'),
 ]

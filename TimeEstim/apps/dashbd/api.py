@@ -29,6 +29,7 @@ def api_stop_timer(request):
     step.minutes = tracked_minutes
     step.is_tracked = False
     step.save()
+    # print('stepID', step.id)
     return JsonResponse({'success': True, 'stepID': step.id})
 
 def api_discard_timer(request):
@@ -43,7 +44,7 @@ def api_get_tasks(request):
     project_id = request.GET.get('project_id', '')
     if project_id:
         tasks = []
-        # print(request.user)
+        # print('request.user', request.user)
         # to only get proj from this user
         project = get_object_or_404(Project, pk=project_id)
         for task in project.tasks.all():
