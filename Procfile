@@ -1,1 +1,1 @@
-web: gunicorn TimeEstim.wsgi
+web: gunicorn TimeEstim.wsgi:application --log-file -
