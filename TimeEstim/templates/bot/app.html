@@ -32,9 +32,9 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/js.cookie.js' %}"></script>
-    <script>
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/js.cookie.js' %}"></script>
+    <script type="text/javascript">
       var chatterbotUrl = '{% url "chatterbot" %}';
       var csrftoken = Cookies.get('csrftoken');
 
