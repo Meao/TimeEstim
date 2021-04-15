@@ -35,8 +35,8 @@
                         <div class="control">
                             <div class="select">
                                 <select name="status" id="id_status">
-                                    <option value="public"{% if project.status == 'public' %} selected{% endif %}>Публичный</option>
-                                    <option value="private"{% if project.status == 'private' %} selected{% endif %}>Закрытый</option>
+                                    <option value="public"{% if project.status == 'ongoing' %} selected{% endif %}>Активный</option>
+                                    <option value="private"{% if project.status == 'archived' %} selected{% endif %}>В архиве</option>
                                 </select>
                             </div>
                         </div>

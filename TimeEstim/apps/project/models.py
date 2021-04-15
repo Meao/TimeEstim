@@ -1,28 +1,32 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
-
-
 from .forms import  DateInput
 from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
-from bulma_widget import widgets
+# from bulma_widget import widgets
 # Create your models here.
 
 def get_sentinel_user():
     return get_user_model().objects.get_or_create(username='deleted')[0]
 
 class Project(models.Model):
-    PUBLIC = 'public'
-    PRIVATE = 'private'
+    ONGOING = 'ongoing'
+    ARCHIVED = 'archived'
     CHOICES_STATUS = (
-        (PUBLIC, 'Публичный'),
-        (PRIVATE, 'Закрытый')
+        (ONGOING, 'Активный'),
+        (ARCHIVED, 'В архиве')
     )
+    # PUBLIC = 'public'
+    # PRIVATE = 'private'
+    # CHOICES_STATUS = (
+    #     (PUBLIC, 'Публичный'),
+    #     (PRIVATE, 'Закрытый')
+    # )
     title = models.CharField(max_length=255)
     creator = models.ForeignKey(User, related_name='projects', on_delete=models.SET(get_sentinel_user))
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=20, choices=CHOICES_STATUS, default=PUBLIC)
+    status = models.CharField(max_length=20, choices=CHOICES_STATUS, default=ONGOING)
     importance = models.BooleanField(default=False)
     urgency = models.BooleanField(default=False)
 
@@ -109,11 +113,12 @@ class TaskForm(ModelForm):
             'resources': _('Ресурсы'),
             'status': _('Статус'),
         }
-        widgets = {
-            'due_date': DateInput(format=('%d/%m/%Y'), attrs={'class':'input', 'placeholder':'Выбор даты', 'type':'date'}),
-        }
+        # widgets = {
+        #     'due_date': DateInput(format=('%d/%m/%Y'), attrs={'class':'input', 'placeholder':'Выбор даты', 'type':'date'}),
+        # }
 
 class Step(models.Model):
+    id = models.BigAutoField(primary_key=True)
     project = models.ForeignKey(Project, related_name='steps', on_delete=models.CASCADE, blank=True, null=True)
     task = models.ForeignKey(Task, related_name='steps', on_delete=models.CASCADE, blank=True, null=True)
     minutes = models.IntegerField(default=0)

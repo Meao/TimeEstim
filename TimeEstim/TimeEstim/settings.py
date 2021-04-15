@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 from chatterbot import languages
+import django_heroku
 import os
 from pathlib import Path
 
@@ -21,7 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_9$_vfjxjy7y@h+th(soxsb%396re5cy_t75j(botdw$&e%)n@'
+# SECRET_KEY = '_9$_vfjxjy7y@h+th(soxsb%396re5cy_t75j(botdw$&e%)n@'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', config('DJANGO_SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -90,10 +92,23 @@ WSGI_APPLICATION = 'TimeEstim.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# db keys are int, ok until prod connects to a lot of users 
+# Starting new projects in Django 3.2, the default type for primary keys is set to a BigAutoField which is a 64 bit integer. 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+DATABASES ={
+    'default':{
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME':'timeestim',
+        'USER':'m_k',
+        'PASSWORD':'',
+        'HOST':'localhost',
+        'PORT':'',
     }
 }
 
@@ -157,3 +172,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())

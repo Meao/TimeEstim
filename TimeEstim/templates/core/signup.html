@@ -49,8 +49,8 @@
                     </div>
                 </div>
                 <ul class="password-helt-text">
-                    <li v-if="password1.length < 8">Ваш пароль должен содержать не менее 8 символов.</li>
-                    <li v-if="!isNaN(password1)">Ваш пароль должен содержать не менее 1 буквы.</li>
+                    <li v-if="password1.length < 8" class="has-background-danger-light">Ваш пароль должен содержать не менее 8 символов.</li>
+                    <li v-if="!isNaN(password1)" class="has-background-danger-light">Ваш пароль должен содержать не менее 1 буквы.</li>
                 </ul>
                 <p>Нажатие на кнопку Зарегистрироваться даёт согласие на обработку персональных данных в рамках текущего законодательства.</p>
                 <div class="field">

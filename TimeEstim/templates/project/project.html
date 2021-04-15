@@ -9,7 +9,6 @@
     <div id="project-app">
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-            {# <li><a href="#">Dashboard</a></li>  #}
                 <li><a href="{% url 'projects' %}">Проекты</a></li>
                 <li class="is-active"><a href="{% url 'project' project.id %}" aria-current="page">{{ project.title }}</a></li>
             </ul>
@@ -23,7 +22,7 @@
                     {{ project.num_tasks_todo }} не начато, 
                     {{ project.num_tasks_ongoing }} в процессе,
                     {{ project.num_tasks_testing }} тестируется</p>
-                <p>Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p>
+                <p>Статус: {% if project.status == 'ongoing' %}Активный{% else %}В архиве{% endif %}</p>
                 <p>Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                 <p>Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p>
                 <div class="buttons">
@@ -58,6 +57,8 @@
             </div>
         </div>
 
+        <h2 class="is-size-4">Канбан таблица</h2>
+
         {% if not tasks_todo and not tasks_done and not tasks_ongoing and not tasks_testing and not tasks_archived %}
             <div class="columns">
                 <div class="column is-3">
@@ -68,7 +69,6 @@
             </div>
         {% endif %}
 
-        <h2 class="is-size-4">Канбан таблица</h2>
         <div class="columns is-multiline">
             {% if tasks_todo %}
             <div class="column">
@@ -182,9 +182,9 @@
             
         <div class="columns is-multiline">
             <div class="box">
+                <h3 class="is-size-5">В архиве</h2>
             {% if tasks_archived %}
             <div class="column">
-                <h3 class="is-size-5">В архиве</h2>
                 <div class="columns is-multiline">
                     {% for task in tasks_archived %}
                     <div class="column">
@@ -203,6 +203,12 @@
                     {% endfor %}
                 </div>
             </div>
+            {% else %}
+                <div class="column is-half">
+                    <div class="notification">
+                        <p>Задач пока нет </p>
+                    </div>
+                </div>
             {% endif %}
         </div>
         </div>
