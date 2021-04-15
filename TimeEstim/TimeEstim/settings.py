@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+# from boto.s3.connection import S3Connection
 from chatterbot import languages
 import django_heroku
 import os
@@ -22,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '_9$_vfjxjy7y@h+th(soxsb%396re5cy_t75j(botdw$&e%)n@'
-from boto.s3.connection import S3Connection
-SECRET_KEY = S3Connection(os.environ['SECRET_KEY'])
+# django_heroku overrides default with secure credentials automatically generated in the Heroku platform.
+SECRET_KEY = '_9$_vfjxjy7y@h+th(soxsb%396re5cy_t75j(botdw$&e%)n@'
+# SECRET_KEY = S3Connection(os.environ['SECRET_KEY'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
