@@ -23,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '_9$_vfjxjy7y@h+th(soxsb%396re5cy_t75j(botdw$&e%)n@'
+from boto.s3.connection import S3Connection
+SECRET_KEY = S3Connection(os.environ['SECRET_KEY'])
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
