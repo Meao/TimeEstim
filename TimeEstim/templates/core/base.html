@@ -63,7 +63,7 @@
                         {% if request.user.is_authenticated %} 
                         <div class="navbar-item" v-if="!trackingTime">
                             <div class="buttons">
-                                <a class="button is-success" @click="startTimer()">
+                                <a class="button" style="background: #683db8; color: #FFF;" @click="startTimer()">
                                     <span class="icon"><i class="fas fa-play"></i></span>
                                     <span>Старт</span>
                                 </a>

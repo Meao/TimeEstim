@@ -44,7 +44,8 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == True %}{% if project.urgency == True %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -53,11 +54,6 @@
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
-                                    <br>
-                                    <a href="{% url 'delete_project' project.id %}" class="button">
-                                        <span class="icon"><i class="fas fa-trash"></i></span>
-                                        <span>Удалить</span>
-                                    </a>
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}
@@ -79,7 +75,8 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == False %}{% if project.urgency == True %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -88,11 +85,6 @@
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
-                                    <br>
-                                    <a href="{% url 'delete_project' project.id %}" class="button">
-                                        <span class="icon"><i class="fas fa-trash"></i></span>
-                                        <span>Удалить</span>
-                                    </a>
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}
@@ -116,7 +108,8 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == True %}{% if project.urgency == False %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -125,11 +118,6 @@
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
-                                    <br>
-                                    <a href="{% url 'delete_project' project.id %}" class="button">
-                                        <span class="icon"><i class="fas fa-trash"></i></span>
-                                        <span>Удалить</span>
-                                    </a>
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}
@@ -151,7 +139,8 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == False %}{% if project.urgency == False %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -160,11 +149,6 @@
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
-                                    <br>
-                                    <a href="{% url 'delete_project' project.id %}" class="button">
-                                        <span class="icon"><i class="fas fa-trash"></i></span>
-                                        <span>Удалить</span>
-                                    </a>
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}
@@ -189,11 +173,11 @@
                                 <div class="notification">
                                     <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
-                                    <br>
+                                    {% comment %} <br>
                                     <a href="{% url 'delete_project' project.id %}" class="button">
                                         <span class="icon"><i class="fas fa-trash"></i></span>
                                         <span>Удалить</span>
-                                    </a>
+                                    </a>{% endcomment %}
                                 </div>
                             </div>
                     {% endif %}

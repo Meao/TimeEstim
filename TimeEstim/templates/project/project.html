@@ -73,23 +73,19 @@
             {% if tasks_todo %}
             <div class="column">
             <div class="box">
-                <h3 class="is-size-5">Сделать</h2>
+                <h3 class="is-size-5">Сделать</h3>
                 <div class="columns is-multiline">
                     {% for task in tasks_todo %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                            <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
                             <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
-                            {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'delete_task' project.id task.id %}" class="button">
-                                <span class="icon"><i class="fas fa-trash"></i></span>
-                                <span>Удалить</span>
-                            </a>
                         </div>
                     </div>
                     {% endfor %}
@@ -100,23 +96,19 @@
             {% if tasks_ongoing %}
             <div class="column">
             <div class="box">
-                <h3 class="is-size-5">В процессе</h2>
+                <h3 class="is-size-5">В процессе</h3>
                 <div class="columns is-multiline">
                     {% for task in tasks_ongoing %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                            <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
                             <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
-                            {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'delete_task' project.id task.id %}" class="button">
-                                <span class="icon"><i class="fas fa-trash"></i></span>
-                                <span>Удалить</span>
-                            </a>
                         </div>
                     </div>
                     {% endfor %}
@@ -127,23 +119,19 @@
             {% if tasks_testing %}
             <div class="column">
             <div class="box">
-                <h3 class="is-size-5">Тестируется</h2>
+                <h3 class="is-size-5">Тестируется</h3>
                 <div class="columns is-multiline">
                     {% for task in tasks_testing %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                            <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
                             <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
-                            {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'delete_task' project.id task.id %}" class="button">
-                                <span class="icon"><i class="fas fa-trash"></i></span>
-                                <span>Удалить</span>
-                            </a>
                         </div>
                     </div>
                     {% endfor %}
@@ -154,19 +142,18 @@
             {% if tasks_done %}
             <div class="column">
             <div class="box">
-                <h3 class="is-size-5">Выполнено</h2>
+                <h3 class="is-size-5">Выполнено</h3>
                 <div class="columns is-multiline">
                     {% for task in tasks_done %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
+                            <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
                             <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
-                            {% comment %} <br> {% endcomment %}
                         </div>
                     </div>
                     {% endfor %}
@@ -178,14 +165,14 @@
             
         <div class="columns is-multiline">
             <div class="box">
-                <h3 class="is-size-5">В архиве</h2>
+                <h3 class="is-size-5">В архиве</h3>
             {% if tasks_archived %}
             <div class="column">
                 <div class="columns is-multiline">
                     {% for task in tasks_archived %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
+                            <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
