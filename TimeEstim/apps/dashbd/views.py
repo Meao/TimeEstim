@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from .utilities import get_time_for_user_on_date, time_for_month, time_for_user_in_month, time_for_user_on_project_in_month, time_for_user_in_month
+from .utilities import get_time_for_user_on_date, time_for_month, time_for_user_in_month, time_for_user_on_project_in_month, time_for_user_in_month, velocity_for_user_in_week, velocity_for_user_in_month, velocity_for_user_in_year
 
 # Create your views here.
 
@@ -42,7 +42,10 @@ def dashbd(request):
         'time_for_user_and_date': get_time_for_user_on_date(request.user, date_user),
         'untracked_steps': untracked_steps,
         'user_num_months': user_num_months,
-        'user_month': user_month
+        'user_month': user_month,
+        'velocity_week': velocity_for_user_in_week(request.user), 
+        'velocity_month': velocity_for_user_in_month(request.user), 
+        'velocity_year': velocity_for_user_in_year(request.user)
     }
     return render(request, 'dashbd/dashbd.html', context)
 

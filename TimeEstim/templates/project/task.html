@@ -21,7 +21,7 @@
                 <p>В работе: {{ task.registered_time|format_minutes }}</p>
                 {% if task.aim %}<p>Цель: {{ task.aim }}</p>{% endif %}
                 {% if task.due_date %}<p>Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
-                <p>Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                <p>Предполагаемая сложность (complexity): {{ task.estimated_length }}</p>
                 {% if task.responsible_role %}<p>Ответственные: {{ task.responsible_role }}</p>{% endif %}
                 {% if task.resources %}<p>Ресурсы: {{ task.resources }}</p>{% endif %}
                 <p>Статус: 

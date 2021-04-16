@@ -44,7 +44,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == True %}{% if project.urgency == True %}
                             <div class="column">
                                 <div class="notification">
-                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -54,7 +54,6 @@
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
-                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a> 
                                     <a href="{% url 'delete_project' project.id %}" class="button">
                                         <span class="icon"><i class="fas fa-trash"></i></span>
                                         <span>Удалить</span>
@@ -80,7 +79,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == False %}{% if project.urgency == True %}
                             <div class="column">
                                 <div class="notification">
-                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -90,7 +89,6 @@
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
-                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a>
                                     <a href="{% url 'delete_project' project.id %}" class="button">
                                         <span class="icon"><i class="fas fa-trash"></i></span>
                                         <span>Удалить</span>
@@ -118,7 +116,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == True %}{% if project.urgency == False %}
                             <div class="column">
                                 <div class="notification">
-                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -128,7 +126,6 @@
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
-                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a> 
                                     <a href="{% url 'delete_project' project.id %}" class="button">
                                         <span class="icon"><i class="fas fa-trash"></i></span>
                                         <span>Удалить</span>
@@ -154,7 +151,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == False %}{% if project.urgency == False %}
                             <div class="column">
                                 <div class="notification">
-                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
                                         {{ project.num_tasks_todo }} не начато, 
@@ -164,7 +161,6 @@
                                     {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                                     <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                     <br>
-                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a> 
                                     <a href="{% url 'delete_project' project.id %}" class="button">
                                         <span class="icon"><i class="fas fa-trash"></i></span>
                                         <span>Удалить</span>
@@ -191,10 +187,9 @@
                     {% if project.status == 'archived' %}
                             <div class="column">
                                 <div class="notification">
-                                    <h4 class="is-size-6">{{ project.title }}</h4>
+                                    <a href="{% url 'project' project.id %}"><h4 class="is-size-6">{{ project.title }}</h4></a>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <br>
-                                    <a href="{% url 'project' project.id %}" class="button">Подробнее</a> 
                                     <a href="{% url 'delete_project' project.id %}" class="button">
                                         <span class="icon"><i class="fas fa-trash"></i></span>
                                         <span>Удалить</span>

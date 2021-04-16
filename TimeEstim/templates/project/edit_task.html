@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label>Предполагаемая продолжительность</label>
+                        <label>Предполагаемая сложность</label>
                         <div class="control">
                             <div class="select">
                                 <select name="estimated_length" id="id_estimated_length">
@@ -73,7 +73,10 @@
                             <div class="select">
                                 <select name="status" id="id_status">
                                     <option value="todo"{% if task.status == 'todo' %} selected{% endif %}>Сделать</option>
+                                    <option value="ongoing"{% if task.status == 'ongoing' %} selected{% endif %}>В процессе</option>
+                                    <option value="testing"{% if task.status == 'testing' %} selected{% endif %}>Тестируется</option>
                                     <option value="done"{% if task.status == 'done' %} selected{% endif %}>Выполнено</option>
+                                    <option value="archived"{% if task.status == 'archived' %} selected{% endif %}>В архиве</option>
                                 </select>
                             </div>
                         </div>

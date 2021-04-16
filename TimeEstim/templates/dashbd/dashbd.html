@@ -128,12 +128,32 @@
         </div>
 
         <div class="column is-6">
-                <div class="buttons">
-                    <a href="{% url 'bot' %}" class="button is-light">
-                        <span class="icon"><i class="fas fa-question"></i></span>
-                        <span>Спросить у чат-бота как организовать день</span>
-                    </a> 
-                </div> 
+            <div class="notification">
+                <h2 class="subtitle">Производительность (velocity)</h2>
+                <table class="table is-fullwidth" style="text-align: left;">
+                    <thead>
+                        <tr>
+                            <th>За неделю</th>
+                            <th>За месяц</th>
+                            <th>За год</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ velocity_week }}</td>
+                            <td>{{ velocity_month }}</td>
+                            <td>{{ velocity_year }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                <br>
+            <div class="buttons">
+                <a href="{% url 'bot' %}" class="button is-light">
+                    <span class="icon"><i class="fas fa-question"></i></span>
+                    <span>Спросить у чат-бота как организовать день</span>
+                </a> 
+            </div> 
         </div>
     </div>
 
@@ -144,11 +164,9 @@
         {% for project in projects %}
             <div class="column is-3">
                 <div class="notification">
-                    <h2 class="is-size-5">{{ project.title }}</h2>
+                    <a href="{% url 'project' project.id %}"><h2 class="is-size-5">{{ project.title }}</h2></a>
                     <p class="is-size-7">Потрачено времени: {{ project.registered_time|format_minutes }}</p>
                     <p class="is-size-7">Задач: {{ project.num_tasks_todo }}</p>
-                    {% comment %} <hr> {% endcomment %}
-                    <a href="{% url 'project' project.id %}" class="button ">Подробнее</a>
                 </div>
             </div>
         {% empty %}

@@ -78,15 +78,14 @@
                     {% for task in tasks_todo %}
                     <div class="column">
                         <div class="notification">
-                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
-                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
                             {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
                             <a href="{% url 'delete_task' project.id task.id %}" class="button">
                                 <span class="icon"><i class="fas fa-trash"></i></span>
                                 <span>Удалить</span>
@@ -106,15 +105,14 @@
                     {% for task in tasks_ongoing %}
                     <div class="column">
                         <div class="notification">
-                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
-                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
                             {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
                             <a href="{% url 'delete_task' project.id task.id %}" class="button">
                                 <span class="icon"><i class="fas fa-trash"></i></span>
                                 <span>Удалить</span>
@@ -134,15 +132,14 @@
                     {% for task in tasks_testing %}
                     <div class="column">
                         <div class="notification">
-                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
-                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
                             {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
                             <a href="{% url 'delete_task' project.id task.id %}" class="button">
                                 <span class="icon"><i class="fas fa-trash"></i></span>
                                 <span>Удалить</span>
@@ -162,15 +159,14 @@
                     {% for task in tasks_done %}
                     <div class="column">
                         <div class="notification">
-                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
-                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
                             {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a>
                         </div>
                     </div>
                     {% endfor %}
@@ -189,15 +185,14 @@
                     {% for task in tasks_archived %}
                     <div class="column">
                         <div class="notification">
-                            <h4 class="is-size-6">{{ task.title }}</h3>
+                            <a href="{% url 'task' project.id task.id %}"><h4 class="is-size-6">{{ task.title }}</h3></a> 
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
                             {% if task.due_date %}<p class="is-size-7">Дедлайн: {{ task.due_date|date:"d.m.Y" }}</p>{% endif %}
-                            <p class="is-size-7">Предполагаемая продолжительность: {{ task.estimated_length }}</p>
+                            <p class="is-size-7">Предполагаемая сложность: {{ task.estimated_length }}</p>
                             {% if task.responsible_role %}<p class="is-size-7">Ответственные: {{ task.responsible_role }}</p>{% endif %}
                             {% if task.resources %}<p class="is-size-7">Ресурсы: {{ task.resources }}</p>{% endif %}
                             {% comment %} <br> {% endcomment %}
-                            <a href="{% url 'task' project.id task.id %}" class="button">Подробнее</a> 
                         </div>
                     </div>
                     {% endfor %}

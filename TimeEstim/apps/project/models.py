@@ -90,6 +90,7 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=CHOICES_STATUS, default=TODO)
     source = models.CharField(max_length=255, blank = True, null=True, default=None)
+    done_date = models.DateTimeField(blank = True, null=True, default=None)
 
     class Meta:
         ordering = ['-created_at']

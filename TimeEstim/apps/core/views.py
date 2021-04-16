@@ -36,6 +36,7 @@ def signup(request):
             user.save()
             uprofile = Userprofile.objects.create(user=user)
             login(request, user)
+            return redirect('profile')
     else:
         form = UserCreationForm()
     return render(request, '../templates/core/signup.html', {'form': form})

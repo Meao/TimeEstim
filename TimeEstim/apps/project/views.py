@@ -116,6 +116,19 @@ def edit_task(request, project_id, task_id):
             task.estimated_length = estimated_length
             task.responsible_role = responsible_role
             task.resources = resources
+            if status == 'done':
+                # done_date = datetime.now().time()
+                # print(done_date)
+                # done_date = datetime.now()
+                # print(done_date)
+                # done_date = datetime.now().date()
+                # print(done_date)
+                task.done_date = datetime.now().date()
+            else:
+                task.done_date = None
+                # done_date = None
+                # print(done_date)
+            # print(status)
             task.status = status
             task.save()
             messages.info(request, 'Изменения сохранены')
