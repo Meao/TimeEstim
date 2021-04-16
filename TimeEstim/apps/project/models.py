@@ -82,7 +82,7 @@ class Task(models.Model):
     project = models.ForeignKey(Project, related_name='tasks', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     aim = models.CharField(max_length=255, blank = True, null=True, default=None)
-    due_date = models.DateTimeField(blank = True, null=True, default=None)
+    due_date = models.DateField(blank = True, null=True, default=None)
     estimated_length = models.IntegerField(choices=ScrumPocker.choices, default=1)
     responsible_role = models.CharField(max_length=255, blank = True, null=True, default=None)
     resources = models.CharField(max_length=255, blank = True, null=True, default=None)
@@ -90,7 +90,7 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=CHOICES_STATUS, default=TODO)
     source = models.CharField(max_length=255, blank = True, null=True, default=None)
-    done_date = models.DateTimeField(blank = True, null=True, default=None)
+    done_date = models.DateField(blank = True, null=True, default=None)
 
     class Meta:
         ordering = ['-created_at']
@@ -114,9 +114,9 @@ class TaskForm(ModelForm):
             'resources': _('Ресурсы'),
             'status': _('Статус'),
         }
-        # widgets = {
-        #     'due_date': DateInput(format=('%d/%m/%Y'), attrs={'class':'input', 'placeholder':'Выбор даты', 'type':'date'}),
-        # }
+        widgets = {
+            'due_date': DateInput(format=('%Y-%m-%d'), attrs={'class':'input', 'placeholder':'гггг-мм-дд', 'type':'date'}),
+        }
 
 class Step(models.Model):
     id = models.BigAutoField(primary_key=True)

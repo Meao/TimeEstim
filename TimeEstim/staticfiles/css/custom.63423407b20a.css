@@ -1,0 +1,15 @@
+
+    .list-group-item {
+        padding: 10px;
+        margin-bottom: 4px;
+        border-radius: 2rem;
+      }
+      .list-group-item:nth-child(even) {
+        background-color: #eee;
+        color: #683db8;
+      }
+      .list-group-item:nth-child(odd) {
+        background: #683db8;
+        color: #FFF;
+        text-align: right;
+      }
