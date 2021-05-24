@@ -78,7 +78,7 @@
                     {% for task in tasks_todo %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">&#10005;</a>
                             <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
@@ -101,7 +101,7 @@
                     {% for task in tasks_ongoing %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">&#10005;</a>
                             <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}
@@ -124,7 +124,7 @@
                     {% for task in tasks_testing %}
                     <div class="column">
                         <div class="notification">
-                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                            <a href="{% url 'delete_task' project.id task.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">&#10005;</a>
                             <h4 class="is-size-6"><a href="{% url 'task' project.id task.id %}">{{ task.title }}</a></h4>
                             <p class="is-size-7">Потрачено времени: {{ task.registered_time|format_minutes }}</p>
                             {% if task.aim %}<p class="is-size-7">Цель: {{ task.aim }}</p>{% endif %}

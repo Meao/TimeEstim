@@ -17,6 +17,7 @@ pq = os.path.join(base_dir, 'static/training_data/personal_ques.txt')
 training_data_quesans = open(qa).read().splitlines()
 training_data_personal = open(pq).read().splitlines()
 training_data = training_data_quesans + training_data_personal
+# print(training_data)
 trainer.train(training_data)
 
 # Training With Corpus

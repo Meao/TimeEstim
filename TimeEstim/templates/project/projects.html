@@ -44,7 +44,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == True %}{% if project.urgency == True %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">&#10005;</a>
                                     <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
@@ -75,7 +75,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == False %}{% if project.urgency == True %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">&#10005;</a>
                                     <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
@@ -108,7 +108,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == True %}{% if project.urgency == False %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">&#10005;</a>
                                     <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 
@@ -139,7 +139,7 @@
                         {% if project.status == 'ongoing' %}{% if project.importance == False %}{% if project.urgency == False %}
                             <div class="column">
                                 <div class="notification">
-                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">x</a>
+                                    <a href="{% url 'delete_project' project.id %}" class="button" style="right: 2px; top: 2px; position:absolute;">&#10005;</a>
                                     <h4 class="is-size-6"><a href="{% url 'project' project.id %}">{{ project.title }}</a></h4>
                                     <p class="is-size-7">В работе: {{ project.registered_time|format_minutes }}</p>
                                     <p class="is-size-7">Задачи: 

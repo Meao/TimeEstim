@@ -4,6 +4,7 @@
     <head>
         <!-- Meta -->
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Title -->
         <title>{% block title %}{% endblock %}TimeEstim</title>
 
@@ -41,22 +42,22 @@
                 <div class="navbar-menu ">
                     <div class="navbar-start">
                         {% comment %} {% if not request.user.is_authenticated %} {% endcomment %}
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a href="#" class="navbar-link">
-                                <span class="icon"><i class="fas fa-business-time"></i></span>
-                            </a>
-
-                            <div class="navbar-dropdown">
+                        <div class="navbar-item">
                             <a href="{% url 'bot' %}" class="navbar-item">
-                                Чатбот
+                                <span class="icon"><i class="far fa-comments"></i></span>
+                                &nbsp;&nbsp;Чатбот
                             </a>
+                        </div>
+                        <div class="navbar-item">
                             <a href="{% url 'templates' %}" class="navbar-item">
-                                Шаблоны
+                                <span class="icon"><i class="fas fa-business-time"></i></span>
+                                &nbsp;&nbsp;Шаблоны
                             </a>
+                        </div>
+                        <div class="navbar-item">
                             <a href="{% url 'plans' %}" class="navbar-item">
-                                Абонементы
+                                &#8381; Абонементы
                             </a>
-                            </div>
                         </div>
 
                         {% comment %} {% else %}  {% endcomment %}
@@ -64,7 +65,8 @@
                         <div class="navbar-item" v-if="!trackingTime">
                             <div class="buttons">
                                 <a class="button" style="background: #683db8; color: #FFF;" @click="startTimer()">
-                                    <span class="icon"><i class="fas fa-play"></i></span>
+                                    &#9200; &nbsp;&nbsp;<span class="icon"><i class="fas fa-play"></i></span>
+                                    {% comment %} &#9201;  {% endcomment %}
                                     <span>Старт</span>
                                 </a>
                             </div>
@@ -73,8 +75,9 @@
                         <div class="navbar-item" v-else>
                             <div class="buttons">
                                 <a class="button is-warning" @click="stopTimer()">
-                                    <span class="icon"><i class="fas fa-stop"></i></span>
-                                    {% comment %} <i class="fas fa-square"></i> {% endcomment %}
+                                    &#9200; &nbsp;&nbsp;<span class="icon"><i class="fas fa-stop"></i></span>
+                                    {% comment %} <i class="fas fa-square"></i>
+                                    &#10675; &#9201;  {% endcomment %}
                                     <span>[[ readableSeconds ]] (стоп)</span>
                                 </a>
                             </div>
@@ -95,19 +98,16 @@
                             </div>
                         </div>  {% endcomment %}
 
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a href="#" class="navbar-link">
-                                <span class="icon"><i class="fas fa-tasks"></i></span>
-                            </a>
-
-                            <div class="navbar-dropdown">
+                        <div class="navbar-item">
                             <a href="{% url 'dashbd' %}" class="navbar-item">
-                                Панель управления
+                                &#127899; &nbsp;&nbsp;Панель управления
                             </a>
+                        </div>
+                        <div class="navbar-item">
                             <a href="{% url 'projects' %}" class="navbar-item">
-                                Проекты
+                                <span class="icon"><i class="fas fa-tasks"></i></span>
+                                &nbsp;&nbsp;Проекты
                             </a>
-                            </div>
                         </div>
                         {% endif %}
                     </div>
@@ -116,16 +116,16 @@
                             <div class="navbar-item">
                                 <div class="buttons">
                                     <a href="{% url 'login' %}" class="button ">
-                                        <span class="icon"><i class="fas fa-user-clock"></i></span> 
-                                        &nbsp;&nbsp;Вход
+                                        {% comment %} <span class="icon"><i class="fas fa-user-clock"></i></span>  {% endcomment %}
+                                        &#128100;  &nbsp;&nbsp;Вход
                                     </a>
                                 </div>
                             </div>
                             <div class="navbar-item">
                                 <div class="buttons">
                                     <a href="{% url 'signup' %}" class="button ">
-                                        <span class="icon"><i class="fas fa-user-clock"></i></span> 
-                                        &nbsp;&nbsp;Регистрация 
+                                        {% comment %} <span class="icon"><i class="fas fa-user-clock"></i></span>  {% endcomment %}
+                                        &#128100;  &nbsp;&nbsp;Регистрация 
                                     </a>
                                 </div>
                             </div> 
@@ -133,8 +133,8 @@
                             <div class="navbar-item">
                                 <div class="buttons">
                                     <a href="{% url 'profile' %}" class="button ">
-                                        <span class="icon"><i class="fas fa-user-clock"></i></span>
-                                        <span>{% firstof request.user.get_full_name request.user.username %}</span>
+                                        {% comment %} <span class="icon"><i class="fas fa-user-clock"></i></span> {% endcomment %}
+                                        &#128100; &nbsp;&nbsp;<span>{% firstof request.user.get_full_name request.user.username %}</span>
                                     </a>
                                 </div>
                             </div> 
