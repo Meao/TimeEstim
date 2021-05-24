@@ -44,19 +44,20 @@
                         {% comment %} {% if not request.user.is_authenticated %} {% endcomment %}
                         <div class="navbar-item">
                             <a href="{% url 'bot' %}" class="navbar-item">
-                                <span class="icon"><i class="far fa-comments"></i></span>
-                                &nbsp;&nbsp;Чатбот
+                                {% comment %} <span class="icon"><i class="far fa-comments"></i></span>&nbsp;&nbsp; {% endcomment %}
+                                Чатбот
                             </a>
                         </div>
                         <div class="navbar-item">
                             <a href="{% url 'templates' %}" class="navbar-item">
-                                <span class="icon"><i class="fas fa-business-time"></i></span>
-                                &nbsp;&nbsp;Шаблоны
+                                {% comment %} <span class="icon"><i class="fas fa-business-time"></i></span>&nbsp;&nbsp; {% endcomment %}
+                                Шаблоны
                             </a>
                         </div>
                         <div class="navbar-item">
                             <a href="{% url 'plans' %}" class="navbar-item">
-                                &#8381; Абонементы
+                                {% comment %} &#8381;  {% endcomment %}
+                                Абонементы
                             </a>
                         </div>
 
@@ -65,8 +66,8 @@
                         <div class="navbar-item" v-if="!trackingTime">
                             <div class="buttons">
                                 <a class="button" style="background: #683db8; color: #FFF;" @click="startTimer()">
-                                    &#9200; &nbsp;&nbsp;<span class="icon"><i class="fas fa-play"></i></span>
-                                    {% comment %} &#9201;  {% endcomment %}
+                                    &#9201; &nbsp;&nbsp;<span class="icon"><i class="fas fa-play"></i></span>
+                                    {% comment %} &#9200; {% endcomment %}
                                     <span>Старт</span>
                                 </a>
                             </div>
@@ -75,9 +76,9 @@
                         <div class="navbar-item" v-else>
                             <div class="buttons">
                                 <a class="button is-warning" @click="stopTimer()">
-                                    &#9200; &nbsp;&nbsp;<span class="icon"><i class="fas fa-stop"></i></span>
+                                    &#9201; &nbsp;&nbsp;<span class="icon"><i class="fas fa-stop"></i></span>
                                     {% comment %} <i class="fas fa-square"></i>
-                                    &#10675; &#9201;  {% endcomment %}
+                                    &#10675; &#9200; {% endcomment %}
                                     <span>[[ readableSeconds ]] (стоп)</span>
                                 </a>
                             </div>
@@ -100,13 +101,14 @@
 
                         <div class="navbar-item">
                             <a href="{% url 'dashbd' %}" class="navbar-item">
-                                &#127899; &nbsp;&nbsp;Панель управления
+                                {% comment %} &#127899; &nbsp;&nbsp; {% endcomment %}
+                                Панель управления
                             </a>
                         </div>
                         <div class="navbar-item">
                             <a href="{% url 'projects' %}" class="navbar-item">
-                                <span class="icon"><i class="fas fa-tasks"></i></span>
-                                &nbsp;&nbsp;Проекты
+                                {% comment %} <span class="icon"><i class="fas fa-tasks"></i></span>&nbsp;&nbsp; {% endcomment %}
+                                Проекты
                             </a>
                         </div>
                         {% endif %}
@@ -116,16 +118,16 @@
                             <div class="navbar-item">
                                 <div class="buttons">
                                     <a href="{% url 'login' %}" class="button ">
-                                        {% comment %} <span class="icon"><i class="fas fa-user-clock"></i></span>  {% endcomment %}
-                                        &#128100;  &nbsp;&nbsp;Вход
+                                        {% comment %} <span class="icon"><i class="fas fa-user-clock"></i></span> &#128100;  &nbsp;&nbsp; {% endcomment %}
+                                        Вход
                                     </a>
                                 </div>
                             </div>
                             <div class="navbar-item">
                                 <div class="buttons">
                                     <a href="{% url 'signup' %}" class="button ">
-                                        {% comment %} <span class="icon"><i class="fas fa-user-clock"></i></span>  {% endcomment %}
-                                        &#128100;  &nbsp;&nbsp;Регистрация 
+                                        {% comment %} <span class="icon"><i class="fas fa-user-clock"></i></span> &#128100;  &nbsp;&nbsp; {% endcomment %}
+                                        Регистрация 
                                     </a>
                                 </div>
                             </div> 
