@@ -1,14 +1,9 @@
 {% extends 'core/base.html' %}
 
 {% load static %}  
-{% comment %}{#  Добро пожаловать в 
-Учет времени стало проще. 
-Давайте начнем #}
-{% endcomment %}
 {% block title %}Домашняя страница | {% endblock %}
 
 {% block content %}
-<section class="hero is-medium is-light is-bold">
     <div class="container">
         <div class="columns">
             <div class="column is-8 is-offset-2">
@@ -27,7 +22,6 @@
             </div>
         </div>
     </div>
-</section>
   
 <div class="container">
     <div class="columns">
@@ -37,9 +31,9 @@
                     <img src="{% static 'images/features-tracktime.png' %}"> 
                 </div>
                 <div class="column is-8 text">
-                    <h2 class="subtitle">4 простых шага</h2>
+                    <h3>4 простых шага</h3>
                     <ul>
-                        <li>Записаться.</li>
+                        <li><a href="{% url 'signup' %}" class="button is-small">Записаться</a></li>
                         <li>Запустить таймер.</li>
                         <li>Создать проект и задачу.</li>
                         <li>Наслаждаться графиком своих побед.</li>

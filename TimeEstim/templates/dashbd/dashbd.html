@@ -5,7 +5,22 @@
 {% block title %}Панель управления | {% endblock %}
 
 {% block content %}
+    <br>
+
     <div class="columns is-multiline">
+        <div class="column is-6">
+            <a href="{% url 'bot' %}" class="button is-light">
+                <span class="icon"><i class="far fa-comments"></i></span>
+                <span>Спросить у чат-бота как организовать день</span>
+            </a> 
+        </div>
+        <div class="column is-6">
+            <a href="{% url 'templates' %}" class="button is-light">
+                <span class="icon"><i class="fas fa-question"></i></span> 
+                <span>Посмотреть примеры формулировки задач</span>
+            </a>
+        </div>
+
         <div class="column is-6">
             <div class="notification">
                 <h2 class="subtitle">За {% if num_days is 0 %}сегодня {{ date_user|date:"d.m.Y" }}{% else %}{{ date_user|date:"d.m.Y" }}{% endif %}</h2>
@@ -147,13 +162,6 @@
                     </tbody>
                 </table>
             </div>
-                <br>
-            <div class="buttons">
-                <a href="{% url 'bot' %}" class="button is-light">
-                    <span class="icon"><i class="fas fa-question"></i></span>
-                    <span>Спросить у чат-бота как организовать день</span>
-                </a> 
-            </div> 
         </div>
     </div>
 

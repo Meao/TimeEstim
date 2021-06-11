@@ -3,28 +3,28 @@
 
 {% block title %}Дельный бот | {% endblock %}
 {% block content %}
-    <section class="hero is-medium is-light is-bold">
         <div class="container">
             <br>
             <h1 class="title">Дельный бот</h1>
             <h2 class="subtitle">Помощник в борьбе с прокрастинацией.</h2>
+            <p>Клик на кнопку "Ввод" отправляет боту вопрос из поля ввода, в поле обновляются подсказки-вопросы.</p>
+            <br>
         </div>
-    </section>
     <br>
     <div class="columns" id="signup-app">
         <div class="column is-6 is-offset-3">
             <div class="box">
-                <ul class="list-group chat-log js-chat-log"  style="height: 60vh; overflow: hidden scroll">
+                <ul class="list-group chat-log js-chat-log"  style="height: 50vh; margin: 0; padding: 0; overflow: auto; -webkit-overflow-scrolling: touch;">
                 </ul>
                 
                 <br>
                 <div class="field has-addons">
-                <div class="control is-expanded">
-                      <input type="text" class="input js-text" placeholder="Что ты можешь?..."/>
-                </div>
-                <div class="control">
-                    <button class="button is-light js-say">Ввести</button>
-                </div>
+                    <div class="control is-expanded">
+                          <input type="text" class="input js-text" placeholder="Что ты можешь?..."/>
+                    </div>
+                    <div class="control">
+                        <button class="button is-light js-say">Ввод</button>
+                    </div>
                 </div>
             </div> 
         </div>

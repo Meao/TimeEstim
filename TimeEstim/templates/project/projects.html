@@ -6,32 +6,18 @@
 
 {% block content %}
     <div id="projects-app">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-            <ul>
-                {% comment %} <li class="is-active"><a href="#" aria-current="page">Проекты</a></li> {% endcomment %}
-            </ul>
-        </nav>
+        <br>
+        <h1 class="title">Проекты</h1>
 
-        <div class="columns">
-            <div class="column is-4">
-                <h1 class="title">Проекты</h1>
-                <a @click="showAddProjectModal = !showAddProjectModal" class="button is-light">
-                    <span class="icon"><i class="fas fa-plus"></i></span>
-                    <span>Добавить проект</span>
-                </a> 
-                {% comment %} {% if team.plan.max_projects_per_team > team.projects.count %}
-                    <a @click="showAddProjectModal = !showAddProjectModal" class="button is-light">Добавить проект</a>
-                {% else %}
-                    <div class="notification is-warning">
-                        Эта команда достигла лимита проектов.<br>
-                        {% if team.created_by == request.user %}
-                            <a href="{% url 'team:plans' %}">Улучшить абонемент</a>
-                        {% else %}
-                            Свяжитесь с капитаном вашей команды.
-                        {% endif %}
-                    </div>
-                {% endif %}  {% endcomment %}
-            </div>
+        <div class="buttons has-addons ">
+            <a @click="showAddProjectModal = !showAddProjectModal" class="button is-dark">
+                <span class="icon"><i class="fas fa-plus"></i></span>
+                <span>Добавить проект</span>
+            </a> 
+            <a href="{% url 'templates' %}" class="button is-light">
+                <span class="icon"><i class="fas fa-question"></i></span> 
+                <span>Посмотреть примеры формулировки </span>
+            </a>
         </div>
 
         <h2 class="is-size-4">Матрица Эйзенхауэра</h2>
@@ -52,8 +38,6 @@
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
-                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
-                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}
@@ -83,8 +67,6 @@
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
-                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
-                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}
@@ -116,8 +98,6 @@
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
-                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
-                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}
@@ -147,8 +127,6 @@
                                         {{ project.num_tasks_ongoing }} в процессе,
                                         {{ project.num_tasks_testing }} тестируется</p>
                                     {% comment %} <p class="is-size-7">Статус: {% if project.status == 'public' %}Публичный{% else %}Приватный{% endif %}</p> {% endcomment %}
-                                    {% comment %} <p class="is-size-7">Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
-                                    <p class="is-size-7">Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p> {% endcomment %}
                                 </div>
                             </div>
                         {% endif %}{% endif %}{% endif %}

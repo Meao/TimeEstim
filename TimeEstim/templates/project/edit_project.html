@@ -7,7 +7,6 @@
     <br>
         <nav class="breadcrumb" aria-label="breadcrumbs">
             <ul>
-            {# <li><a href="#">Dashboard</a></li>  #}
                 <li><a href="{% url 'projects' %}">Проекты</a></li>
                 <li><a href="{% url 'project' project.id %}">{{ project.title }}</a></li>
                 <li class="is-active"><a href="{% url 'edit_project' project.id %}" aria-current="page">Редактировать проект</a></li>
@@ -35,8 +34,8 @@
                         <div class="control">
                             <div class="select">
                                 <select name="status" id="id_status">
-                                    <option value="public"{% if project.status == 'ongoing' %} selected{% endif %}>Активный</option>
-                                    <option value="private"{% if project.status == 'archived' %} selected{% endif %}>В архиве</option>
+                                    <option value="ongoing"{% if project.status == 'ongoing' %} selected{% endif %}>Активный</option>
+                                    <option value="archived"{% if project.status == 'archived' %} selected{% endif %}>В архиве</option>
                                 </select>
                             </div>
                         </div>

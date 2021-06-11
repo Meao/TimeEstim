@@ -33,7 +33,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', 'time-estim.herokuapp.com']
 
 # FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
-
+LOGIN_REDIRECT_URL = '/projects/'
+LOGIN_URL = '/core/login/'
 LOGOUT_REDIRECT_URL = 'index'
 # Application definition
 
@@ -154,8 +155,8 @@ CHATTERBOT = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-# LANGUAGE_CODE = 'Ru-ru'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Europe/Moscow'

@@ -65,18 +65,18 @@
                                 Чатбот
                             </a>
                         </div>
-                        <div class="navbar-item">
+                        {% comment %} <div class="navbar-item">
                             <a href="{% url 'templates' %}" class="navbar-item">
-                                {% comment %} <span class="icon"><i class="fas fa-business-time"></i></span>&nbsp;&nbsp; {% endcomment %}
+                                {% comment %} <span class="icon"><i class="fas fa-business-time"></i></span>&nbsp;&nbsp; 
                                 Шаблоны
                             </a>
                         </div>
                         <div class="navbar-item">
                             <a href="{% url 'plans' %}" class="navbar-item">
-                                {% comment %} &#8381;  {% endcomment %}
+                                {% comment %} &#8381;  
                                 Абонементы
                             </a>
-                        </div>
+                        </div> {% endcomment %}
 
                         {% comment %} {% else %}  {% endcomment %}
                         {% if request.user.is_authenticated %} 
@@ -168,17 +168,16 @@
 
                 <div class="modal-card">
                     <div class="modal-card-head">
-                        <p class="modal-card-title">Отслеживаемое время</p>
+                        <p class="modal-card-title">Вы отслеживали [[ readableSeconds ]]</p>
                     </div>
 
                     <div class="modal-card-body">
-                        <p>Вы отслеживали [[ readableSeconds ]]</p>
+                        <button class="button is-warning" @click="addToTask()">Добавить в задачу</button>&nbsp;&nbsp;
+                        <button class="button is-warning" @click="addLater()">Добавить позже из панели управления</button>
                     </div>
 
                     <footer class="modal-card-foot">
-                        <button class="button is-primary" @click="addToTask()">Добавить в задачу</button>
-                        <button class="button is-success" @click="addLater()">Добавить позже</button>
-                        <button class="button is-danger" @click="discardTimer()">Отменить</button>
+                        <button class="button is-dark" @click="discardTimer()">Удалить</button>
                     </footer>
                 </div>
             </div>  

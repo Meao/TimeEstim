@@ -26,33 +26,18 @@
                 <p>Важный: {% if project.importance == False %}Нет{% else %}Да{% endif %}</p>
                 <p>Срочный: {% if project.urgency == False %}Нет{% else %}Да{% endif %}</p>
                 <div class="buttons">
-                    <a @click="showAddTaskModal = !showAddTaskModal" class="button is-light">
+                    <a @click="showAddTaskModal = !showAddTaskModal" class="button is-dark">
                         <span class="icon"><i class="fas fa-plus"></i></span>
                         <span>Добавить задачу</span>
                     </a> 
-
-                    {% comment %} {% if team.plan.max_tasks_per_project > project.tasks.count %}
-                        <a @click="showAddTaskModal = !showAddTaskModal" class="button is-light">Добавить задачу</a>
-                    {% else %}
-                        <div class="notification is-warning">
-                            Эта команда достигла лимита проектов.<br>
-                
-                            {% if team.created_by == request.user %}
-                                <a href="{% url 'team:plans' %}">Улучшить абонемент</a>
-                            {% else %}
-                                Свяжитесь с капитаном вашей команды.
-                            {% endif %}
-                        </div>
-                    {% endif %} {% endcomment %}
-
                     <a href="{% url 'edit_project' project.id %}" class="button is-light">
                         <span class="icon"><i class="far fa-edit"></i></span>
                         <span>Редактировать проект</span>
                     </a> 
-                    <a href="{% url 'bot' %}" class="button is-light">
-                        <span class="icon"><i class="fas fa-question"></i></span>
-                        <span>Спросить у бота как назвать задачу</span>
-                    </a> 
+                    <a href="{% url 'templates' %}" class="button is-light">
+                        <span class="icon"><i class="fas fa-question"></i></span> 
+                        <span>Посмотреть примеры формулировки </span>
+                    </a>
                 </div> 
             </div>
         </div>
@@ -186,7 +171,7 @@
                 </div>
             </div>
             {% else %}
-                <div class="column is-half">
+                <div class="column ">
                     <div class="notification">
                         <p>Задач пока нет </p>
                     </div>

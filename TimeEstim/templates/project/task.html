@@ -98,11 +98,13 @@
                                     <td>
                                         <a href="{% url 'edit_step' project.id task.id step.id %}" class="button">
                                             <span class="icon"><i class="far fa-edit"></i></span>
-                                            &#128221; &#9998; <span>Редактировать</span>
+                                            {% comment %} &#128221; &#9998;  {% endcomment %}
+                                            <span>Редактировать</span>
                                         </a>
                                         <a href="{% url 'delete_step' project.id task.id step.id %}" class="button">
                                             <span class="icon"><i class="fas fa-trash"></i></span>
-                                            &#128465; <span>Удалить</span>
+                                            {% comment %} &#128465;  {% endcomment %}
+                                            <span>Удалить</span>
                                         </a>
                                     </td>
                                 </tr>

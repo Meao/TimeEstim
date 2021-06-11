@@ -22,7 +22,6 @@ def profile(request):
         request.user.email = request.POST.get('email', '')
         request.user.save()
         messages.info(request, 'Изменения успешно сохранены')
-        # return redirect('myaccount')
     return render(request, '../templates/accounts/profile.html')
 
 def signup(request):
@@ -36,7 +35,7 @@ def signup(request):
             user.save()
             uprofile = Userprofile.objects.create(user=user)
             login(request, user)
-            return redirect('profile')
+            return redirect('projects')
     else:
         form = UserCreationForm()
     return render(request, '../templates/core/signup.html', {'form': form})
