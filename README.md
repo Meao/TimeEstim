@@ -3,7 +3,8 @@ The project features a website with multiple time management tools. It's in Russ
 
 ![picture](screens/indexbigscreen.png)
 
-More screenshots in [the folder "screens"](screens/)
+More screenshots in [the folder "screens"](screens/).
+The website is on a free hosting so it may take a couple of minutes to open the main page.
 
 If you want to use a version of python prior to python3.8.6: To avoid a recent incompatibility between ChatterBot and spaCy, go to /myvenv/lib/python3.7/site-packages/chatterbot/tagging.py
 and replace 
